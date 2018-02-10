@@ -1,5 +1,4 @@
 # A-new-langauge-for-Parallel-Programming
-COMT or COmputer Multi Tasks is an easy way to do parallel programming
 
 The project focuses on building a new lnguage for parallel programming that would help beginning programmers write multi tasking code in an easy way.
 The project is built on ANTLR4 and uses Java for interpretation.
