@@ -12,7 +12,6 @@ public class Dine{
 			chopistics[i] = new Chopstick("C: "+i);
 		}
 		Philosopher[] philosophers = new Philosopher[5];
-		//for(i=0; i<philosophers.length; i++){
 		philosophers[0] = new Philosopher("P: 0 - ", chopistics[0], chopistics[1]);
 		philosophers[1] = new Philosopher("P: 1 - ", chopistics[1], chopistics[2]);
 		philosophers[2] = new Philosopher("P: 2 - ", chopistics[2], chopistics[3]);
