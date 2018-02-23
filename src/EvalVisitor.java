@@ -4,9 +4,10 @@ import java.util.Map;
 public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	
 	Map<String, Integer> memory = new HashMap<String, Integer>();
+	private EvalVisitorString evalVisitorString = new EvalVisitorString();
 
 	@Override
-	public Integer visitAssign(LabeledExprParser.AssignContext ctx)
+	public Integer visitAssignInt(LabeledExprParser.AssignIntContext ctx)
 	{
 		String id = ctx.ID().getText();
 		int value = visit(ctx.expr());
@@ -16,6 +17,14 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	
 	@Override
 	public Integer visitPrintExpr(LabeledExprParser.PrintExprContext ctx)
+	{
+		Integer value = visit(ctx.expr());
+		System.out.print(value);
+		return 0; 
+	}
+	
+	@Override
+	public Integer visitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx)
 	{
 		Integer value = visit(ctx.expr());
 		System.out.println(value);
@@ -98,6 +107,24 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	{
 		return visit(ctx.expr());
 	}
+	
+	
+	
+	@Override
+	public Integer visitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx)
+	{		
+		String value = ctx.STR().getText();
+		evalVisitorString.visitPrintStrExpr(value);
+		return 0;
+	}	
+	
+	@Override
+	public Integer visitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx)
+	{		
+		String value = ctx.STR().getText();
+		evalVisitorString.visitPrintlnStrExpr(value);
+		return 0;
+	}	
 	
 }
 

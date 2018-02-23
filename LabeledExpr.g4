@@ -3,8 +3,12 @@ grammar LabeledExpr;
 prog: stat+ ;
 
 stat: 'if' condExpr ':' NEWLINE expr	#ifStat
-	| expr NEWLINE 						#printExpr	
-	| ID '=' expr NEWLINE 				#assign
+	| 'print' '(' expr ')' NEWLINE 		#printExpr
+	| 'println' '(' expr ')' NEWLINE 	#printlnExpr
+	| 'print' '(' STR ')' NEWLINE 		#printStrExpr
+	| 'println' '(' STR ')' NEWLINE 	#printlnStrExpr		
+	| 'int'? ID '=' expr NEWLINE 		#assignInt
+	| 'string'? ID '=' STR NEWLINE 		#assignStr
 	| NEWLINE 							#blank
 	;
 
@@ -26,6 +30,7 @@ NEQ : '!=' ;
 
 ID : [a-zA-Z]+ ;
 INT : [0-9]+ ;
+STR : '"' .*? '"' ;
 NEWLINE : '\r'? '\n' ; 
 WS : [ \t]+ -> skip ;
 
