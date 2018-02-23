@@ -6,6 +6,9 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.runtime.tree.ErrorNode;
 
 public class LabeledExprBaseListener implements LabeledExprListener {
+	@Override public void enterParallel(LabeledExprParser.ParallelContext ctx) { }
+	@Override public void exitParallel(LabeledExprParser.ParallelContext ctx) { }
+
 	@Override public void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 	@Override public void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 
@@ -30,11 +33,17 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterParens(LabeledExprParser.ParensContext ctx) { }
 	@Override public void exitParens(LabeledExprParser.ParensContext ctx) { }
 
+	@Override public void enterTasks(LabeledExprParser.TasksContext ctx) { }
+	@Override public void exitTasks(LabeledExprParser.TasksContext ctx) { }
+
 	@Override public void enterMulDiv(LabeledExprParser.MulDivContext ctx) { }
 	@Override public void exitMulDiv(LabeledExprParser.MulDivContext ctx) { }
 
 	@Override public void enterId(LabeledExprParser.IdContext ctx) { }
 	@Override public void exitId(LabeledExprParser.IdContext ctx) { }
+
+	@Override public void enterCritSec(LabeledExprParser.CritSecContext ctx) { }
+	@Override public void exitCritSec(LabeledExprParser.CritSecContext ctx) { }
 
 	@Override public void enterProg(LabeledExprParser.ProgContext ctx) { }
 	@Override public void exitProg(LabeledExprParser.ProgContext ctx) { }
@@ -47,6 +56,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterIfStat(LabeledExprParser.IfStatContext ctx) { }
 	@Override public void exitIfStat(LabeledExprParser.IfStatContext ctx) { }
+
+	@Override public void enterAsignParallel(LabeledExprParser.AsignParallelContext ctx) { }
+	@Override public void exitAsignParallel(LabeledExprParser.AsignParallelContext ctx) { }
 
 	@Override public void enterAssignInt(LabeledExprParser.AssignIntContext ctx) { }
 	@Override public void exitAssignInt(LabeledExprParser.AssignIntContext ctx) { }

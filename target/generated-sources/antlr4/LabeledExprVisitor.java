@@ -3,6 +3,8 @@ import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.Token;
 
 public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
+	T visitParallel(LabeledExprParser.ParallelContext ctx);
+
 	T visitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 
 	T visitBlank(LabeledExprParser.BlankContext ctx);
@@ -19,9 +21,13 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitParens(LabeledExprParser.ParensContext ctx);
 
+	T visitTasks(LabeledExprParser.TasksContext ctx);
+
 	T visitMulDiv(LabeledExprParser.MulDivContext ctx);
 
 	T visitId(LabeledExprParser.IdContext ctx);
+
+	T visitCritSec(LabeledExprParser.CritSecContext ctx);
 
 	T visitProg(LabeledExprParser.ProgContext ctx);
 
@@ -30,6 +36,8 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 	T visitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
 
 	T visitIfStat(LabeledExprParser.IfStatContext ctx);
+
+	T visitAsignParallel(LabeledExprParser.AsignParallelContext ctx);
 
 	T visitAssignInt(LabeledExprParser.AssignIntContext ctx);
 }

@@ -9,6 +9,7 @@ stat: 'if' condExpr ':' NEWLINE expr	#ifStat
 	| 'println' '(' STR ')' NEWLINE 	#printlnStrExpr		
 	| 'int'? ID '=' expr NEWLINE 		#assignInt
 	| 'string'? ID '=' STR NEWLINE 		#assignStr
+	| parallel							#asignParallel
 	| NEWLINE 							#blank
 	;
 
@@ -18,6 +19,14 @@ expr: expr op=('*'|'/') expr 			#MulDiv
 	| ID 								#id
 	| '('expr')' 						#parens
 	;
+	
+parallel: '{@' NEWLINE* tasks+ NEWLINE* critSec NEWLINE* '@}' ;
+
+tasks: 'task' NEWLINE* '{' NEWLINE* stat NEWLINE* '}'
+	 | NEWLINE ;
+	 
+critSec : 'critical' NEWLINE* '{' NEWLINE* stat NEWLINE* '}'
+	    | NEWLINE ;
 
 condExpr: expr op=('=='|'!=') expr	#cndExpr;
 

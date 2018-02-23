@@ -3,6 +3,9 @@ import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.Token;
 
 public interface LabeledExprListener extends ParseTreeListener {
+	void enterParallel(LabeledExprParser.ParallelContext ctx);
+	void exitParallel(LabeledExprParser.ParallelContext ctx);
+
 	void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 	void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 
@@ -27,11 +30,17 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterParens(LabeledExprParser.ParensContext ctx);
 	void exitParens(LabeledExprParser.ParensContext ctx);
 
+	void enterTasks(LabeledExprParser.TasksContext ctx);
+	void exitTasks(LabeledExprParser.TasksContext ctx);
+
 	void enterMulDiv(LabeledExprParser.MulDivContext ctx);
 	void exitMulDiv(LabeledExprParser.MulDivContext ctx);
 
 	void enterId(LabeledExprParser.IdContext ctx);
 	void exitId(LabeledExprParser.IdContext ctx);
+
+	void enterCritSec(LabeledExprParser.CritSecContext ctx);
+	void exitCritSec(LabeledExprParser.CritSecContext ctx);
 
 	void enterProg(LabeledExprParser.ProgContext ctx);
 	void exitProg(LabeledExprParser.ProgContext ctx);
@@ -44,6 +53,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterIfStat(LabeledExprParser.IfStatContext ctx);
 	void exitIfStat(LabeledExprParser.IfStatContext ctx);
+
+	void enterAsignParallel(LabeledExprParser.AsignParallelContext ctx);
+	void exitAsignParallel(LabeledExprParser.AsignParallelContext ctx);
 
 	void enterAssignInt(LabeledExprParser.AssignIntContext ctx);
 	void exitAssignInt(LabeledExprParser.AssignIntContext ctx);
