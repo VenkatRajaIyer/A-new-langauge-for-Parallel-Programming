@@ -1,0 +1,27 @@
+int a = 5
+println(5)
+
+parallel class Phil
+{
+shared chopstick one
+critical
+{
+	println("eat")
+}
+println("sleep")
+}
+
+
+
+shared class chopstick
+{
+int y
+constructor(x)
+{
+	y = x
+}
+}
+
+
+
+
