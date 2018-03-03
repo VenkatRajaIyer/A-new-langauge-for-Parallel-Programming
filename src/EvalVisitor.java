@@ -146,5 +146,11 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		dataType.put(id, STRINGTYPE);
 		return 0;
 	}
+	
+	@Override 
+	public Integer visitNewParallelStruct(LabeledExprParser.NewParallelStructContext ctx) 
+	{ 
+		return visitChildren(ctx); 
+	}
 }
 
