@@ -45,11 +45,17 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterSharedObjects(LabeledExprParser.SharedObjectsContext ctx) { }
 	@Override public void exitSharedObjects(LabeledExprParser.SharedObjectsContext ctx) { }
 
+	@Override public void enterPrintStm(LabeledExprParser.PrintStmContext ctx) { }
+	@Override public void exitPrintStm(LabeledExprParser.PrintStmContext ctx) { }
+
 	@Override public void enterSClassName(LabeledExprParser.SClassNameContext ctx) { }
 	@Override public void exitSClassName(LabeledExprParser.SClassNameContext ctx) { }
 
 	@Override public void enterAssignInt(LabeledExprParser.AssignIntContext ctx) { }
 	@Override public void exitAssignInt(LabeledExprParser.AssignIntContext ctx) { }
+
+	@Override public void enterAssignStm(LabeledExprParser.AssignStmContext ctx) { }
+	@Override public void exitAssignStm(LabeledExprParser.AssignStmContext ctx) { }
 
 	@Override public void enterConstructor(LabeledExprParser.ConstructorContext ctx) { }
 	@Override public void exitConstructor(LabeledExprParser.ConstructorContext ctx) { }
@@ -59,6 +65,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx) { }
 	@Override public void exitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx) { }
+
+	@Override public void enterPclassDef(LabeledExprParser.PclassDefContext ctx) { }
+	@Override public void exitPclassDef(LabeledExprParser.PclassDefContext ctx) { }
 
 	@Override public void enterInt(LabeledExprParser.IntContext ctx) { }
 	@Override public void exitInt(LabeledExprParser.IntContext ctx) { }
@@ -95,9 +104,6 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx) { }
 	@Override public void exitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx) { }
-
-	@Override public void enterPclassName(LabeledExprParser.PclassNameContext ctx) { }
-	@Override public void exitPclassName(LabeledExprParser.PclassNameContext ctx) { }
 
 	@Override public void enterIfStat(LabeledExprParser.IfStatContext ctx) { }
 	@Override public void exitIfStat(LabeledExprParser.IfStatContext ctx) { }

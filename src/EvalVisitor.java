@@ -152,5 +152,25 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	{ 
 		return visitChildren(ctx); 
 	}
+	
+	
+	
+	
+	/*
+	 * Parallel Classes
+	 */
+	@Override 
+	public Integer visitParallelclass(LabeledExprParser.ParallelclassContext ctx) 
+	{ 
+		return visitChildren(ctx); 
+	}
+	
+	public Integer visitSharedclassDef(LabeledExprParser.SharedclassDefContext ctx) 
+	{ 
+		return visitChildren(ctx); 
+	}
+	
+	
+	
 }
 

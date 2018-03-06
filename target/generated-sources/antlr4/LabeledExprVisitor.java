@@ -29,15 +29,21 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitSharedObjects(LabeledExprParser.SharedObjectsContext ctx);
 
+	T visitPrintStm(LabeledExprParser.PrintStmContext ctx);
+
 	T visitSClassName(LabeledExprParser.SClassNameContext ctx);
 
 	T visitAssignInt(LabeledExprParser.AssignIntContext ctx);
+
+	T visitAssignStm(LabeledExprParser.AssignStmContext ctx);
 
 	T visitConstructor(LabeledExprParser.ConstructorContext ctx);
 
 	T visitBlank(LabeledExprParser.BlankContext ctx);
 
 	T visitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx);
+
+	T visitPclassDef(LabeledExprParser.PclassDefContext ctx);
 
 	T visitInt(LabeledExprParser.IntContext ctx);
 
@@ -62,8 +68,6 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 	T visitNewTask(LabeledExprParser.NewTaskContext ctx);
 
 	T visitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
-
-	T visitPclassName(LabeledExprParser.PclassNameContext ctx);
 
 	T visitIfStat(LabeledExprParser.IfStatContext ctx);
 

@@ -30,15 +30,21 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 
 	@Override public T visitSharedObjects(LabeledExprParser.SharedObjectsContext ctx) { return visitChildren(ctx); }
 
+	@Override public T visitPrintStm(LabeledExprParser.PrintStmContext ctx) { return visitChildren(ctx); }
+
 	@Override public T visitSClassName(LabeledExprParser.SClassNameContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitAssignInt(LabeledExprParser.AssignIntContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitAssignStm(LabeledExprParser.AssignStmContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitConstructor(LabeledExprParser.ConstructorContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitBlank(LabeledExprParser.BlankContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitPclassDef(LabeledExprParser.PclassDefContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitInt(LabeledExprParser.IntContext ctx) { return visitChildren(ctx); }
 
@@ -63,8 +69,6 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	@Override public T visitNewTask(LabeledExprParser.NewTaskContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx) { return visitChildren(ctx); }
-
-	@Override public T visitPclassName(LabeledExprParser.PclassNameContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitIfStat(LabeledExprParser.IfStatContext ctx) { return visitChildren(ctx); }
 

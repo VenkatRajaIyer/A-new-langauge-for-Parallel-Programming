@@ -3,37 +3,39 @@ grammar LabeledExpr;
 prog: stat+ ;
 
 stat: 'if' condExpr ':' NEWLINE expr	#ifStat
-	| 'print' '(' expr ')' NEWLINE 		#printExpr
-	| 'println' '(' expr ')' NEWLINE 	#printlnExpr
-	| 'print' '(' STR ')' NEWLINE 		#printStrExpr
-	| 'println' '(' STR ')' NEWLINE 	#printlnStrExpr		
-	| 'int'? ID '=' expr NEWLINE 		#assignInt
-	| 'string'? ID '=' STR NEWLINE 		#assignStr
-	| pclassName NEWLINE				#parallelclass
+	| printStat							#printStm
+	| assignStat						#assignStm
+	| pclassDef NEWLINE					#parallelclass
 	| sClassDef NEWLINE					#sharedclassDef
 //	| parallel NEWLINE					#asignParallel
 //	| pstat	NEWLINE						#parallelStat					 
 	| NEWLINE 							#blank
 	;
 	
+
+assignStat: 'int'? ID '=' expr NEWLINE 		#assignInt
+		 | 'string'? ID '=' STR NEWLINE 	#assignStr;
+
+	
+printStat: 'print' '(' expr ')' NEWLINE 	#printExpr
+		 | 'println' '(' expr ')' NEWLINE 	#printlnExpr
+		| 'print' '(' STR ')' NEWLINE 		#printStrExpr
+		| 'println' '(' STR ')' NEWLINE 	#printlnStrExpr		;
+
+
 	
 /*
  * Parallel Class-- asumes the data should loop 10 times
  */
-pclassName: 'parallel' 'class' ID NEWLINE* '{' pClassMethods '}' ;
+pclassDef: 'parallel' 'class' ID NEWLINE* '{' pClassMethods '}' ;
 
 pClassMethods: NEWLINE* sharedObjects+ constructor? pCritic pAsynch?  ;
 sharedObjects: sObjectName ;
 sObjectName: sClassName ID NEWLINE;
 
-
-
 pAsynch: stat+ ;
 
 pCritic: 'critical' NEWLINE* '{' stat+ '}' NEWLINE;
-
-
-
 /* Parallel Class Ends */
  
  

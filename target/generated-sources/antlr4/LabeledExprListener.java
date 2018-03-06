@@ -42,11 +42,17 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterSharedObjects(LabeledExprParser.SharedObjectsContext ctx);
 	void exitSharedObjects(LabeledExprParser.SharedObjectsContext ctx);
 
+	void enterPrintStm(LabeledExprParser.PrintStmContext ctx);
+	void exitPrintStm(LabeledExprParser.PrintStmContext ctx);
+
 	void enterSClassName(LabeledExprParser.SClassNameContext ctx);
 	void exitSClassName(LabeledExprParser.SClassNameContext ctx);
 
 	void enterAssignInt(LabeledExprParser.AssignIntContext ctx);
 	void exitAssignInt(LabeledExprParser.AssignIntContext ctx);
+
+	void enterAssignStm(LabeledExprParser.AssignStmContext ctx);
+	void exitAssignStm(LabeledExprParser.AssignStmContext ctx);
 
 	void enterConstructor(LabeledExprParser.ConstructorContext ctx);
 	void exitConstructor(LabeledExprParser.ConstructorContext ctx);
@@ -56,6 +62,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx);
 	void exitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx);
+
+	void enterPclassDef(LabeledExprParser.PclassDefContext ctx);
+	void exitPclassDef(LabeledExprParser.PclassDefContext ctx);
 
 	void enterInt(LabeledExprParser.IntContext ctx);
 	void exitInt(LabeledExprParser.IntContext ctx);
@@ -92,9 +101,6 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
 	void exitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
-
-	void enterPclassName(LabeledExprParser.PclassNameContext ctx);
-	void exitPclassName(LabeledExprParser.PclassNameContext ctx);
 
 	void enterIfStat(LabeledExprParser.IfStatContext ctx);
 	void exitIfStat(LabeledExprParser.IfStatContext ctx);
