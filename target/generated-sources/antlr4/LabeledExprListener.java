@@ -9,17 +9,14 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 	void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 
+	void enterEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx);
+	void exitEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx);
+
 	void enterCndExpr(LabeledExprParser.CndExprContext ctx);
 	void exitCndExpr(LabeledExprParser.CndExprContext ctx);
 
-	void enterSharedclassDef(LabeledExprParser.SharedclassDefContext ctx);
-	void exitSharedclassDef(LabeledExprParser.SharedclassDefContext ctx);
-
 	void enterObject(LabeledExprParser.ObjectContext ctx);
 	void exitObject(LabeledExprParser.ObjectContext ctx);
-
-	void enterParallelclass(LabeledExprParser.ParallelclassContext ctx);
-	void exitParallelclass(LabeledExprParser.ParallelclassContext ctx);
 
 	void enterMulDiv(LabeledExprParser.MulDivContext ctx);
 	void exitMulDiv(LabeledExprParser.MulDivContext ctx);
@@ -39,6 +36,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterPAsynch(LabeledExprParser.PAsynchContext ctx);
 	void exitPAsynch(LabeledExprParser.PAsynchContext ctx);
 
+	void enterAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx);
+	void exitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx);
+
 	void enterSharedObjects(LabeledExprParser.SharedObjectsContext ctx);
 	void exitSharedObjects(LabeledExprParser.SharedObjectsContext ctx);
 
@@ -48,6 +48,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterSClassName(LabeledExprParser.SClassNameContext ctx);
 	void exitSClassName(LabeledExprParser.SClassNameContext ctx);
 
+	void enterAsignParallel(LabeledExprParser.AsignParallelContext ctx);
+	void exitAsignParallel(LabeledExprParser.AsignParallelContext ctx);
+
 	void enterAssignInt(LabeledExprParser.AssignIntContext ctx);
 	void exitAssignInt(LabeledExprParser.AssignIntContext ctx);
 
@@ -56,6 +59,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterConstructor(LabeledExprParser.ConstructorContext ctx);
 	void exitConstructor(LabeledExprParser.ConstructorContext ctx);
+
+	void enterCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
+	void exitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
 
 	void enterBlank(LabeledExprParser.BlankContext ctx);
 	void exitBlank(LabeledExprParser.BlankContext ctx);
@@ -81,6 +87,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterList(LabeledExprParser.ListContext ctx);
 	void exitList(LabeledExprParser.ListContext ctx);
 
+	void enterParams(LabeledExprParser.ParamsContext ctx);
+	void exitParams(LabeledExprParser.ParamsContext ctx);
+
 	void enterSClassDef(LabeledExprParser.SClassDefContext ctx);
 	void exitSClassDef(LabeledExprParser.SClassDefContext ctx);
 
@@ -101,6 +110,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
 	void exitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
+
+	void enterSharedParams(LabeledExprParser.SharedParamsContext ctx);
+	void exitSharedParams(LabeledExprParser.SharedParamsContext ctx);
 
 	void enterIfStat(LabeledExprParser.IfStatContext ctx);
 	void exitIfStat(LabeledExprParser.IfStatContext ctx);

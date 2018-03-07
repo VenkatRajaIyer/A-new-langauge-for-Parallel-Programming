@@ -12,17 +12,14 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 	@Override public void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 
+	@Override public void enterEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx) { }
+	@Override public void exitEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx) { }
+
 	@Override public void enterCndExpr(LabeledExprParser.CndExprContext ctx) { }
 	@Override public void exitCndExpr(LabeledExprParser.CndExprContext ctx) { }
 
-	@Override public void enterSharedclassDef(LabeledExprParser.SharedclassDefContext ctx) { }
-	@Override public void exitSharedclassDef(LabeledExprParser.SharedclassDefContext ctx) { }
-
 	@Override public void enterObject(LabeledExprParser.ObjectContext ctx) { }
 	@Override public void exitObject(LabeledExprParser.ObjectContext ctx) { }
-
-	@Override public void enterParallelclass(LabeledExprParser.ParallelclassContext ctx) { }
-	@Override public void exitParallelclass(LabeledExprParser.ParallelclassContext ctx) { }
 
 	@Override public void enterMulDiv(LabeledExprParser.MulDivContext ctx) { }
 	@Override public void exitMulDiv(LabeledExprParser.MulDivContext ctx) { }
@@ -42,6 +39,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterPAsynch(LabeledExprParser.PAsynchContext ctx) { }
 	@Override public void exitPAsynch(LabeledExprParser.PAsynchContext ctx) { }
 
+	@Override public void enterAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx) { }
+	@Override public void exitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx) { }
+
 	@Override public void enterSharedObjects(LabeledExprParser.SharedObjectsContext ctx) { }
 	@Override public void exitSharedObjects(LabeledExprParser.SharedObjectsContext ctx) { }
 
@@ -51,6 +51,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterSClassName(LabeledExprParser.SClassNameContext ctx) { }
 	@Override public void exitSClassName(LabeledExprParser.SClassNameContext ctx) { }
 
+	@Override public void enterAsignParallel(LabeledExprParser.AsignParallelContext ctx) { }
+	@Override public void exitAsignParallel(LabeledExprParser.AsignParallelContext ctx) { }
+
 	@Override public void enterAssignInt(LabeledExprParser.AssignIntContext ctx) { }
 	@Override public void exitAssignInt(LabeledExprParser.AssignIntContext ctx) { }
 
@@ -59,6 +62,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterConstructor(LabeledExprParser.ConstructorContext ctx) { }
 	@Override public void exitConstructor(LabeledExprParser.ConstructorContext ctx) { }
+
+	@Override public void enterCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { }
+	@Override public void exitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { }
 
 	@Override public void enterBlank(LabeledExprParser.BlankContext ctx) { }
 	@Override public void exitBlank(LabeledExprParser.BlankContext ctx) { }
@@ -84,6 +90,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterList(LabeledExprParser.ListContext ctx) { }
 	@Override public void exitList(LabeledExprParser.ListContext ctx) { }
 
+	@Override public void enterParams(LabeledExprParser.ParamsContext ctx) { }
+	@Override public void exitParams(LabeledExprParser.ParamsContext ctx) { }
+
 	@Override public void enterSClassDef(LabeledExprParser.SClassDefContext ctx) { }
 	@Override public void exitSClassDef(LabeledExprParser.SClassDefContext ctx) { }
 
@@ -104,6 +113,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx) { }
 	@Override public void exitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx) { }
+
+	@Override public void enterSharedParams(LabeledExprParser.SharedParamsContext ctx) { }
+	@Override public void exitSharedParams(LabeledExprParser.SharedParamsContext ctx) { }
 
 	@Override public void enterIfStat(LabeledExprParser.IfStatContext ctx) { }
 	@Override public void exitIfStat(LabeledExprParser.IfStatContext ctx) { }

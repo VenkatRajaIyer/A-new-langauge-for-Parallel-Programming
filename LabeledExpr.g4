@@ -5,9 +5,9 @@ prog: stat+ ;
 stat: 'if' condExpr ':' NEWLINE expr	#ifStat
 	| printStat							#printStm
 	| assignStat						#assignStm
-	| pclassDef NEWLINE					#parallelclass
-	| sClassDef NEWLINE					#sharedclassDef
-//	| parallel NEWLINE					#asignParallel
+//	| pclassDef NEWLINE					#parallelclass
+//	| sClassDef NEWLINE					#sharedclassDef
+	| newparallel NEWLINE					#asignParallel
 //	| pstat	NEWLINE						#parallelStat					 
 	| NEWLINE 							#blank
 	;
@@ -75,10 +75,17 @@ expr: expr op=('*'|'/') expr 			#MulDiv
 /*
  * Parallel Block
  */	
-parallel: '{@' NEWLINE* tasks+ NEWLINE* critSec NEWLINE* '@}' #newParallelStruct ;
+parallel: '{@' NEWLINE* sharedValues NEWLINE* tasks+ NEWLINE* critSecParams NEWLINE* '@}' #newParallelStruct ;
+sharedValues: 'shared' NEWLINE* '{' NEWLINE* params NEWLINE* '}'						  #sharedParams ;
+
+newparallel: '{@' NEWLINE* sharedValues NEWLINE* tasks+ NEWLINE* endParallel #anotherParallelStruct ;
+endParallel: '@}' 															 #endParallelStruct
+           ;
+
 
 pstat: 'parallel' '(' threadArray ',' object')'
-	 | 'parallel' '(' threadArray ',' 'NULL' ')' ;
+	 | 'parallel' '(' threadArray ',' 'NULL' ')' 
+	 ;
 
 /*Paralle block ends - May not be used*/
 
@@ -86,9 +93,16 @@ object: ID ;
 
 threadArray: object '[' INT ']' ;
  
-tasks: NEWLINE* 'task' NEWLINE* '{' NEWLINE* stat NEWLINE* '}'	#newTask ;
+tasks: NEWLINE* 'task' ID NEWLINE* '{' NEWLINE* stat* critSecParams stat* NEWLINE* '}'	#newTask ;
 	 
 critSec : NEWLINE* 'critical' NEWLINE* '{' NEWLINE* stat NEWLINE* '}' #criticalSection ;
+
+critSecParams : NEWLINE* 'critical' '(' params ')' NEWLINE* '{' NEWLINE* stat+ NEWLINE* '}' #criticalSectionWithParams ;
+
+params: ID 				
+	  | params ',' ID
+	  ;
+
 
 condExpr: expr op=('=='|'!=') expr	#cndExpr;
 
@@ -99,7 +113,7 @@ SUB : '-' ;
 EQC : '==' ;
 NEQ : '!=' ;
 
-ID : [a-zA-Z]+ ;
+ID : [a-zA-Z_]+ ;
 INT : [0-9]+ ;
 STR : '"' .*? '"' ;
 NEWLINE : '\r'? '\n' ; 

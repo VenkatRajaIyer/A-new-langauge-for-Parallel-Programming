@@ -8,11 +8,18 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 public class DynamicClass {
+	/**
+	 * TODO - Add a constructor to take certain parameters like Class name that has to be created
+	 */
   Date today = new Date();
   String todayMillis = Long.toString(today.getTime());
   String todayClass = "z_" + todayMillis;
   String todaySource = todayClass + ".java";
 
+  /**
+   * Convert this to a public method so that classes could be created/run
+   * @param args
+   */
   public static void main (String args[]){
 	DynamicClass mtc = new DynamicClass();
     mtc.createIt();
@@ -24,6 +31,9 @@ public class DynamicClass {
        System.out.println(mtc.todaySource + " is bad.");
     }
 
+  /*
+   * Pass the parameters like class name, methods it should contain, what kind of class it is
+   */
   public void createIt() {
     try {
     	System.out.println("Creating this " + todaySource);

@@ -1,27 +1,30 @@
 int a = 5
 println(5)
 
-parallel class Phil
+{@
+shared
 {
-shared chopstick one
-critical
-{
-	println("eat")
-}
-println("sleep")
+chop_a, chop_b, chop_c
 }
 
-
-
-shared class chopstick
+task a
 {
-int y
-constructor(x)
+critical (chop_a, chop_b, chop_c)
 {
-	y = x
+	println("eating 1")
+	println("finished eating 1")
 }
+println("exited 1")
 }
 
 
-
-
+task b
+{
+critical(chop_a, chop_b)
+{
+	println("eating 2")
+	println("finished eating 2")
+}
+println("exited 2")
+}
+@}

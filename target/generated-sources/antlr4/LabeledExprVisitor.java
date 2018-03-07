@@ -7,13 +7,11 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 
+	T visitEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx);
+
 	T visitCndExpr(LabeledExprParser.CndExprContext ctx);
 
-	T visitSharedclassDef(LabeledExprParser.SharedclassDefContext ctx);
-
 	T visitObject(LabeledExprParser.ObjectContext ctx);
-
-	T visitParallelclass(LabeledExprParser.ParallelclassContext ctx);
 
 	T visitMulDiv(LabeledExprParser.MulDivContext ctx);
 
@@ -27,17 +25,23 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitPAsynch(LabeledExprParser.PAsynchContext ctx);
 
+	T visitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx);
+
 	T visitSharedObjects(LabeledExprParser.SharedObjectsContext ctx);
 
 	T visitPrintStm(LabeledExprParser.PrintStmContext ctx);
 
 	T visitSClassName(LabeledExprParser.SClassNameContext ctx);
 
+	T visitAsignParallel(LabeledExprParser.AsignParallelContext ctx);
+
 	T visitAssignInt(LabeledExprParser.AssignIntContext ctx);
 
 	T visitAssignStm(LabeledExprParser.AssignStmContext ctx);
 
 	T visitConstructor(LabeledExprParser.ConstructorContext ctx);
+
+	T visitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
 
 	T visitBlank(LabeledExprParser.BlankContext ctx);
 
@@ -55,6 +59,8 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitList(LabeledExprParser.ListContext ctx);
 
+	T visitParams(LabeledExprParser.ParamsContext ctx);
+
 	T visitSClassDef(LabeledExprParser.SClassDefContext ctx);
 
 	T visitSVars(LabeledExprParser.SVarsContext ctx);
@@ -68,6 +74,8 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 	T visitNewTask(LabeledExprParser.NewTaskContext ctx);
 
 	T visitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
+
+	T visitSharedParams(LabeledExprParser.SharedParamsContext ctx);
 
 	T visitIfStat(LabeledExprParser.IfStatContext ctx);
 
