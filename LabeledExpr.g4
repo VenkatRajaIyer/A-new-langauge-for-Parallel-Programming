@@ -7,22 +7,22 @@ stat:function NEWLINE  					#justcreatefunction
 	| printStat							#printStm
 	| sVars								#createsVars1
 	| assignStat						#assignStm
+	| newparallel NEWLINE				#asignParallel
 //	| pclassDef NEWLINE					#parallelclass
 //	| sClassDef NEWLINE					#sharedclassDef
-	| newparallel NEWLINE				#asignParallel
 //	| pstat	NEWLINE						#parallelStat				 
 	| NEWLINE 							#blank
 	;
 	
 
 assignStat: 'int'? ID '=' expr NEWLINE 		#assignInt
-		 | 'string'? ID '=' STR NEWLINE 	#assignStr;
+		  | 'string'? ID '=' STR NEWLINE 	#assignStr;
 
 	
 printStat: 'print' '(' expr ')' NEWLINE 	#printExpr
 		 | 'println' '(' expr ')' NEWLINE 	#printlnExpr
-		| 'print' '(' STR ')' NEWLINE 		#printStrExpr
-		| 'println' '(' STR ')' NEWLINE 	#printlnStrExpr		;
+		 | 'print' '(' STR ')' NEWLINE 		#printStrExpr
+		 | 'println' '(' STR ')' NEWLINE 	#printlnStrExpr		;
 
 
 function: parametersType ID '('fparams')' NEWLINE* '{' NEWLINE* stat* NEWLINE* returnstatement NEWLINE* '}' #createfunction ;
@@ -32,43 +32,49 @@ returnstatement: 'return' ID  #returnfromfunction;
 /*
  * Parallel Class-- asumes the data should loop 10 times
  */
+/*
 pclassDef: 'parallel' 'class' ID NEWLINE* '{' pClassMethods '}' ;
-
 pClassMethods: NEWLINE* sharedObjects+ constructor? pCritic pAsynch?  ;
 sharedObjects: sObjectName ;
 sObjectName: sClassName ID NEWLINE;
-
 pAsynch: stat+ ;
-
 pCritic: 'critical' NEWLINE* '{' stat+ '}' NEWLINE;
+*/
 /* Parallel Class Ends */
- 
- 
  
 /*
  * Shared Class
  */
   
-sClassDef: 'shared' 'class' ID NEWLINE* '{' NEWLINE* sVars+ constructor '}' ;
-sClassName: 'shared' ID ;	
-
-sVars: 'int' ID NEWLINE;
-
+/*
+ * sClassDef: 'shared' 'class' ID NEWLINE* '{' NEWLINE* sVars+ constructor '}' ;
+ * sClassName: 'shared' ID ;
+ */
 /* Shared Class Ends */
-
 
 /*
  * Common to classes
  */
  
+/*
 constructor: 'constructor' '(' list* ')' NEWLINE* '{' stat+ '}' NEWLINE;
 list: ID
 	| list ',' ID
 	;
-
 methods: STR NEWLINE* '(' NEWLINE* ')' ;
+*/
 
-/*Common classes end */  
+/*Common classes end */ 
+
+/*
+pstat: 'parallel' '(' threadArray ',' object')'
+	 | 'parallel' '(' threadArray ',' 'NULL' ')' 
+	 ;
+*/
+/*Paralle block ends - May not be used*/
+
+
+sVars: 'int' ID NEWLINE;
 
 expr: expr op=('*'|'/') expr 			#MulDiv
 	| expr op=('+'|'-') expr 			#AddSub
@@ -86,14 +92,7 @@ sharedValues: 'shared' NEWLINE* '{' NEWLINE* params NEWLINE* '}'						  #sharedP
 newparallel: '{@' NEWLINE* sharedValues NEWLINE* tasks+ NEWLINE* endParallel #anotherParallelStruct ;
 endParallel: '@}' 															 #endParallelStruct
            ;
-
-
-pstat: 'parallel' '(' threadArray ',' object')'
-	 | 'parallel' '(' threadArray ',' 'NULL' ')' 
-	 ;
-
-/*Paralle block ends - May not be used*/
-
+           
 object: ID ;
 
 threadArray: object '[' INT ']' ;
