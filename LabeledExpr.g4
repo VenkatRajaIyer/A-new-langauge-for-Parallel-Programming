@@ -50,9 +50,9 @@ pCritic: 'critical' NEWLINE* '{' stat+ '}' NEWLINE;
  */
   
 sClassDef: 'shared' 'class' ID NEWLINE* '{' NEWLINE* sVars+ constructor '}' ;
-sClassName: 'shared' ID ;
+sClassName: 'shared' ID ;	
 
-sVars: 'int' ID NEWLINE    #createsVars;
+sVars: 'int' ID NEWLINE;
 
 /* Shared Class Ends */
 
@@ -92,7 +92,7 @@ pstat: 'parallel' '(' threadArray ',' object')'
 	 | 'parallel' '(' threadArray ',' 'NULL' ')' 
 	 ;
 
-//Parallel block ends - May not be used/
+/*Paralle block ends - May not be used*/
 
 object: ID ;
 
@@ -134,3 +134,6 @@ finteger : 'int';
 STR : '"' .*? '"' ;
 NEWLINE : '\r'? '\n' ; 
 WS : [ \t]+ -> skip ;
+
+COMMENT :   '/*' .*? '*/' -> skip ;
+LINE_COMMENT :   '//' ~[\r\n]* -> skip ;
