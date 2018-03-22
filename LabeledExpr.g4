@@ -2,13 +2,15 @@ grammar LabeledExpr;
 
 prog: stat+ ;
 
-stat: 'if' condExpr ':' NEWLINE expr	#ifStat
+stat:function NEWLINE  					#justcreatefunction	
+	| 'if' condExpr ':' NEWLINE expr	#ifStat
 	| printStat							#printStm
+	| sVars								#createsVars1
 	| assignStat						#assignStm
 //	| pclassDef NEWLINE					#parallelclass
 //	| sClassDef NEWLINE					#sharedclassDef
-	| newparallel NEWLINE					#asignParallel
-//	| pstat	NEWLINE						#parallelStat					 
+	| newparallel NEWLINE				#asignParallel
+//	| pstat	NEWLINE						#parallelStat				 
 	| NEWLINE 							#blank
 	;
 	
@@ -22,6 +24,9 @@ printStat: 'print' '(' expr ')' NEWLINE 	#printExpr
 		| 'print' '(' STR ')' NEWLINE 		#printStrExpr
 		| 'println' '(' STR ')' NEWLINE 	#printlnStrExpr		;
 
+
+function: parametersType ID '('fparams')' NEWLINE* '{' NEWLINE* stat* NEWLINE* returnstatement NEWLINE* '}' #createfunction ;
+returnstatement: 'return' ID  #returnfromfunction;
 
 	
 /*
@@ -47,7 +52,7 @@ pCritic: 'critical' NEWLINE* '{' stat+ '}' NEWLINE;
 sClassDef: 'shared' 'class' ID NEWLINE* '{' NEWLINE* sVars+ constructor '}' ;
 sClassName: 'shared' ID ;
 
-sVars: 'int' ID NEWLINE;
+sVars: 'int' ID NEWLINE    #createsVars;
 
 /* Shared Class Ends */
 
@@ -87,7 +92,7 @@ pstat: 'parallel' '(' threadArray ',' object')'
 	 | 'parallel' '(' threadArray ',' 'NULL' ')' 
 	 ;
 
-/*Paralle block ends - May not be used*/
+//Parallel block ends - May not be used/
 
 object: ID ;
 
@@ -103,7 +108,12 @@ params: ID
 	  | params ',' ID
 	  ;
 
-
+fparams: parametersType ID 				
+	  | fparams ',' parametersType ID 
+	  ;
+	  
+parametersType: fvoid | finteger | fchar | fstring;	  
+	  
 condExpr: expr op=('=='|'!=') expr	#cndExpr;
 
 MUL : '*' ;
@@ -115,7 +125,12 @@ NEQ : '!=' ;
 
 ID : [a-zA-Z_]+ ;
 INT : [0-9]+ ;
+
+fvoid : 'void';
+fchar : 'char';
+fstring : 'string';
+finteger : 'int';
+
 STR : '"' .*? '"' ;
 NEWLINE : '\r'? '\n' ; 
 WS : [ \t]+ -> skip ;
-
