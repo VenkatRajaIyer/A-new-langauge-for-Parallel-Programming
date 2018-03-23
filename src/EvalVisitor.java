@@ -1,16 +1,19 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
+import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
+
 
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 /*
 		 * capture the statements to be executed in a hashmap
 		 * 
 		 */
-/*
+		/*
 		 * Receive all the parameters of criticalSection and create mutex out of them 
 		 */
 public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
@@ -18,8 +21,9 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	Map<String, Integer> memory = new HashMap<String, Integer>();
 	Map<String, String> memoryStr = new HashMap<String, String>();
 	Map<String, Integer> dataType = new HashMap<String, Integer>();
+	Map<String, List<LabeledExprParser.StatContext>> treeMap = new HashMap<String, List<LabeledExprParser.StatContext>>();
 	HashMap<String, Mutex> muMap = new HashMap<String, Mutex>();
-	HashSet<Test> set = new HashSet<Test>();
+	HashSet<Tasks> critical = new HashSet<Tasks>();
 	
 	private final int INTEGERTYPE = 0;
 	private final int STRINGTYPE = 1;
@@ -27,6 +31,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	private EvalVisitorString evalVisitorString = new EvalVisitorString();
 	
 	int count = 0;
+	int countStat = 0;
 
 	@Override
 	public Integer visitAssignInt(LabeledExprParser.AssignIntContext ctx)
@@ -41,7 +46,6 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	@Override
 	public Integer visitPrintExpr(LabeledExprParser.PrintExprContext ctx)
 	{
-		System.out.print("this is the print expr "+visit(ctx.expr()));
 		System.out.print(visit(ctx.expr()));
 		return 0; 
 	}
@@ -162,9 +166,20 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	}
 	
 	@Override 
-	public Integer visitNewParallelStruct(LabeledExprParser.NewParallelStructContext ctx) 
+	public Integer visitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx)
 	{ 
 		return visitChildren(ctx); 
+	}
+	
+	@Override public Integer visitNewTask(LabeledExprParser.NewTaskContext ctx) 
+	{ 
+		treeMap.put(ctx.ID().getText(), ctx.stat());
+		visit(ctx.critSecParams());
+		/*
+		 * TODO - This is it.. the apocalypse
+		 */
+		//visit(ctx.stat(1));
+		return 1;  
 	}
 	
 	@Override
@@ -175,9 +190,11 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		ArrayList<String> list = utility.parseData(value);
 		/*
 		 * capture the statements to be executed in a hashmap
-		 * 
 		 */
-		set.add(new Test(ctx.stat(), list, ++count));
+		LabeledExprParser.NewTaskContext nt = (LabeledExprParser.NewTaskContext) ctx.getParent();
+		String taskName = nt.ID().getText();
+		
+		critical.add(new Tasks(ctx.stat(), list, ++count, taskName));		
 		return 1;
 	}
 	
@@ -193,7 +210,6 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		
 		for(String s: list)
 		{
-			System.out.println(s);
 			muMap.put(s, new Mutex());
 		}
 		System.out.println();
@@ -202,22 +218,27 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	
 	@Override public Integer visitEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx) 
 	{ 
-		for(Test t:set)
+		for(Tasks t:critical)
 			t.start();
 		return visitChildren(ctx); 
 	}
 	
 	
-	public class Test extends Thread
+	public class Tasks extends Thread
 	{
 		private java.util.List<LabeledExprParser.StatContext> tree;
 		private ArrayList<String> mutexList;
 		private int uniqueInt;
-		Test(java.util.List<LabeledExprParser.StatContext> tree, ArrayList<String> mutexList, int uniqueInt)
+		String taskName;
+		List<LabeledExprParser.StatContext> st;
+		
+		Tasks(java.util.List<LabeledExprParser.StatContext> tree, ArrayList<String> mutexList, int uniqueInt, String taskName)
 		{	
 			this.tree = tree;
 			this.mutexList = mutexList;
 			this.uniqueInt = uniqueInt;
+			this.taskName = taskName;
+			st = treeMap.get(taskName);
 		}
 		
 		public void run()
@@ -228,7 +249,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 				{
 					try {
 						muMap.get(s).acquire();
-						System.out.println("acquired " + s +" by " + "pilosopher "+ uniqueInt);
+						//System.out.println("acquired " + s +" by " + "pilosopher "+ uniqueInt);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -238,7 +259,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 				{
 					visit(stat);
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(10);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -247,28 +268,18 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 				for(String s: mutexList)
 				{
 					muMap.get(s).release();
-					System.out.println("released " +s+" by " + "pilosopher "+ uniqueInt);
+					//System.out.println("released " +s+" by " + "pilosopher "+ uniqueInt);
 				}
+				
+				for(LabeledExprParser.StatContext s : st)
+				{
+					visit(s);
+				}
+				
 				System.out.println(" ");	
 			}
 		}
 	}
-	
-	/*
-	 * Parallel Classes
-	 */
-//	@Override 
-//	public Integer visitParallelclass(LabeledExprParser.ParallelclassContext ctx) 
-//	{ 
-//		return visitChildren(ctx); 
-//	}
-//	
-//	public Integer visitSharedclassDef(LabeledExprParser.SharedclassDefContext ctx) 
-//	{ 
-//		return visitChildren(ctx); 
-//	}
-	
-	
 	
 }
 

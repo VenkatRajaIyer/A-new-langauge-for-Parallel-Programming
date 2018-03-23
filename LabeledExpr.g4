@@ -13,7 +13,6 @@ stat:function NEWLINE  					#justcreatefunction
 //	| pstat	NEWLINE						#parallelStat				 
 	| NEWLINE 							#blank
 	;
-	
 
 assignStat: 'int'? ID '=' expr NEWLINE 		#assignInt
 		  | 'string'? ID '=' STR NEWLINE 	#assignStr;
@@ -73,6 +72,9 @@ pstat: 'parallel' '(' threadArray ',' object')'
 */
 /*Paralle block ends - May not be used*/
 
+/* 
+parallel: '{@' NEWLINE* sharedValues NEWLINE* tasks+ NEWLINE* critSecParams NEWLINE* '@}' #newParallelStruct ;
+*/
 
 sVars: 'int' ID NEWLINE;
 
@@ -85,13 +87,12 @@ expr: expr op=('*'|'/') expr 			#MulDiv
 
 /*
  * Parallel Block
- */	
-parallel: '{@' NEWLINE* sharedValues NEWLINE* tasks+ NEWLINE* critSecParams NEWLINE* '@}' #newParallelStruct ;
-sharedValues: 'shared' NEWLINE* '{' NEWLINE* params NEWLINE* '}'						  #sharedParams ;
-
+ */
 newparallel: '{@' NEWLINE* sharedValues NEWLINE* tasks+ NEWLINE* endParallel #anotherParallelStruct ;
 endParallel: '@}' 															 #endParallelStruct
            ;
+sharedValues: 'shared' NEWLINE* '{' NEWLINE* params NEWLINE* '}'			 #sharedParams ;
+//statinCritcal:stat*															 #statInCritical;
            
 object: ID ;
 

@@ -6,11 +6,20 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.runtime.tree.ErrorNode;
 
 public class LabeledExprBaseListener implements LabeledExprListener {
-	@Override public void enterMethods(LabeledExprParser.MethodsContext ctx) { }
-	@Override public void exitMethods(LabeledExprParser.MethodsContext ctx) { }
-
 	@Override public void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 	@Override public void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
+
+	@Override public void enterFchar(LabeledExprParser.FcharContext ctx) { }
+	@Override public void exitFchar(LabeledExprParser.FcharContext ctx) { }
+
+	@Override public void enterParametersType(LabeledExprParser.ParametersTypeContext ctx) { }
+	@Override public void exitParametersType(LabeledExprParser.ParametersTypeContext ctx) { }
+
+	@Override public void enterJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx) { }
+	@Override public void exitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx) { }
+
+	@Override public void enterCreatesVars1(LabeledExprParser.CreatesVars1Context ctx) { }
+	@Override public void exitCreatesVars1(LabeledExprParser.CreatesVars1Context ctx) { }
 
 	@Override public void enterEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx) { }
 	@Override public void exitEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx) { }
@@ -21,11 +30,11 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterObject(LabeledExprParser.ObjectContext ctx) { }
 	@Override public void exitObject(LabeledExprParser.ObjectContext ctx) { }
 
+	@Override public void enterFinteger(LabeledExprParser.FintegerContext ctx) { }
+	@Override public void exitFinteger(LabeledExprParser.FintegerContext ctx) { }
+
 	@Override public void enterMulDiv(LabeledExprParser.MulDivContext ctx) { }
 	@Override public void exitMulDiv(LabeledExprParser.MulDivContext ctx) { }
-
-	@Override public void enterNewParallelStruct(LabeledExprParser.NewParallelStructContext ctx) { }
-	@Override public void exitNewParallelStruct(LabeledExprParser.NewParallelStructContext ctx) { }
 
 	@Override public void enterId(LabeledExprParser.IdContext ctx) { }
 	@Override public void exitId(LabeledExprParser.IdContext ctx) { }
@@ -33,23 +42,26 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterProg(LabeledExprParser.ProgContext ctx) { }
 	@Override public void exitProg(LabeledExprParser.ProgContext ctx) { }
 
+	@Override public void enterReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx) { }
+	@Override public void exitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx) { }
+
 	@Override public void enterCriticalSection(LabeledExprParser.CriticalSectionContext ctx) { }
 	@Override public void exitCriticalSection(LabeledExprParser.CriticalSectionContext ctx) { }
 
-	@Override public void enterPAsynch(LabeledExprParser.PAsynchContext ctx) { }
-	@Override public void exitPAsynch(LabeledExprParser.PAsynchContext ctx) { }
+	@Override public void enterCreatefunction(LabeledExprParser.CreatefunctionContext ctx) { }
+	@Override public void exitCreatefunction(LabeledExprParser.CreatefunctionContext ctx) { }
+
+	@Override public void enterFparams(LabeledExprParser.FparamsContext ctx) { }
+	@Override public void exitFparams(LabeledExprParser.FparamsContext ctx) { }
 
 	@Override public void enterAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx) { }
 	@Override public void exitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx) { }
 
-	@Override public void enterSharedObjects(LabeledExprParser.SharedObjectsContext ctx) { }
-	@Override public void exitSharedObjects(LabeledExprParser.SharedObjectsContext ctx) { }
-
 	@Override public void enterPrintStm(LabeledExprParser.PrintStmContext ctx) { }
 	@Override public void exitPrintStm(LabeledExprParser.PrintStmContext ctx) { }
 
-	@Override public void enterSClassName(LabeledExprParser.SClassNameContext ctx) { }
-	@Override public void exitSClassName(LabeledExprParser.SClassNameContext ctx) { }
+	@Override public void enterFstring(LabeledExprParser.FstringContext ctx) { }
+	@Override public void exitFstring(LabeledExprParser.FstringContext ctx) { }
 
 	@Override public void enterAsignParallel(LabeledExprParser.AsignParallelContext ctx) { }
 	@Override public void exitAsignParallel(LabeledExprParser.AsignParallelContext ctx) { }
@@ -60,9 +72,6 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterAssignStm(LabeledExprParser.AssignStmContext ctx) { }
 	@Override public void exitAssignStm(LabeledExprParser.AssignStmContext ctx) { }
 
-	@Override public void enterConstructor(LabeledExprParser.ConstructorContext ctx) { }
-	@Override public void exitConstructor(LabeledExprParser.ConstructorContext ctx) { }
-
 	@Override public void enterCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { }
 	@Override public void exitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { }
 
@@ -72,29 +81,20 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx) { }
 	@Override public void exitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx) { }
 
-	@Override public void enterPclassDef(LabeledExprParser.PclassDefContext ctx) { }
-	@Override public void exitPclassDef(LabeledExprParser.PclassDefContext ctx) { }
-
 	@Override public void enterInt(LabeledExprParser.IntContext ctx) { }
 	@Override public void exitInt(LabeledExprParser.IntContext ctx) { }
-
-	@Override public void enterAddSub(LabeledExprParser.AddSubContext ctx) { }
-	@Override public void exitAddSub(LabeledExprParser.AddSubContext ctx) { }
 
 	@Override public void enterAssignStr(LabeledExprParser.AssignStrContext ctx) { }
 	@Override public void exitAssignStr(LabeledExprParser.AssignStrContext ctx) { }
 
+	@Override public void enterAddSub(LabeledExprParser.AddSubContext ctx) { }
+	@Override public void exitAddSub(LabeledExprParser.AddSubContext ctx) { }
+
 	@Override public void enterParens(LabeledExprParser.ParensContext ctx) { }
 	@Override public void exitParens(LabeledExprParser.ParensContext ctx) { }
 
-	@Override public void enterList(LabeledExprParser.ListContext ctx) { }
-	@Override public void exitList(LabeledExprParser.ListContext ctx) { }
-
 	@Override public void enterParams(LabeledExprParser.ParamsContext ctx) { }
 	@Override public void exitParams(LabeledExprParser.ParamsContext ctx) { }
-
-	@Override public void enterSClassDef(LabeledExprParser.SClassDefContext ctx) { }
-	@Override public void exitSClassDef(LabeledExprParser.SClassDefContext ctx) { }
 
 	@Override public void enterSVars(LabeledExprParser.SVarsContext ctx) { }
 	@Override public void exitSVars(LabeledExprParser.SVarsContext ctx) { }
@@ -102,11 +102,11 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterThreadArray(LabeledExprParser.ThreadArrayContext ctx) { }
 	@Override public void exitThreadArray(LabeledExprParser.ThreadArrayContext ctx) { }
 
-	@Override public void enterPClassMethods(LabeledExprParser.PClassMethodsContext ctx) { }
-	@Override public void exitPClassMethods(LabeledExprParser.PClassMethodsContext ctx) { }
-
 	@Override public void enterPrintExpr(LabeledExprParser.PrintExprContext ctx) { }
 	@Override public void exitPrintExpr(LabeledExprParser.PrintExprContext ctx) { }
+
+	@Override public void enterFvoid(LabeledExprParser.FvoidContext ctx) { }
+	@Override public void exitFvoid(LabeledExprParser.FvoidContext ctx) { }
 
 	@Override public void enterNewTask(LabeledExprParser.NewTaskContext ctx) { }
 	@Override public void exitNewTask(LabeledExprParser.NewTaskContext ctx) { }
@@ -119,15 +119,6 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterIfStat(LabeledExprParser.IfStatContext ctx) { }
 	@Override public void exitIfStat(LabeledExprParser.IfStatContext ctx) { }
-
-	@Override public void enterSObjectName(LabeledExprParser.SObjectNameContext ctx) { }
-	@Override public void exitSObjectName(LabeledExprParser.SObjectNameContext ctx) { }
-
-	@Override public void enterPstat(LabeledExprParser.PstatContext ctx) { }
-	@Override public void exitPstat(LabeledExprParser.PstatContext ctx) { }
-
-	@Override public void enterPCritic(LabeledExprParser.PCriticContext ctx) { }
-	@Override public void exitPCritic(LabeledExprParser.PCriticContext ctx) { }
 
 	@Override public void enterEveryRule(ParserRuleContext ctx) { }
 	@Override public void exitEveryRule(ParserRuleContext ctx) { }
