@@ -3,9 +3,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
+
+
+
+
+
 
 
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
@@ -25,6 +31,12 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	HashMap<String, Mutex> muMap = new HashMap<String, Mutex>();
 	HashSet<Tasks> critical = new HashSet<Tasks>();
 	
+	
+	/////New Hash Maps///////
+	HashMap<String, Integer> globalHM = new HashMap<String, Integer>(); ///same as memory
+	HashMap<String, FunctionCreate> functionHM = new HashMap<String, FunctionCreate>();
+	HashMap<String, Stack<HashMap<String, Integer>>> currentHM= new HashMap<String, Stack<HashMap<String, Integer>>>(); 
+	
 	private final int INTEGERTYPE = 0;
 	private final int STRINGTYPE = 1;
 	boolean strType = false;
@@ -33,6 +45,36 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	int count = 0;
 	int countStat = 0;
 
+	/*
+	 * just create function
+	 */
+	@Override
+	public Integer visitCreatefunction(LabeledExprParser.CreatefunctionContext ctx)
+	{
+		String function_name = ctx.ID().getText();
+		FunctionCreate c = new FunctionCreate(ctx);
+		functionHM.put(function_name, c);
+		return 0;
+	}
+	
+	@Override
+	public Integer visitCall_function(LabeledExprParser.Call_functionContext ctx)
+	{
+		String call = ctx.ID().getText();
+//		String params = ctx.params().getText();
+		
+		return 0;
+	}
+	
+	@Override        ////main function/////
+	public Integer visitWritemain(LabeledExprParser.WritemainContext ctx)
+	{
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		ctx.stat();
+		
+		return 0;
+	}
+	
 	@Override
 	public Integer visitAssignInt(LabeledExprParser.AssignIntContext ctx)
 	{
@@ -68,6 +110,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	public Integer visitId(LabeledExprParser.IdContext ctx)
 	{
 		String id = ctx.ID().getText();
+		//Try getting to know the parent
 		if(memory.containsKey(id)) return memory.get(id);
 		else if (memoryStr.containsKey(id)){
 			strType = true;
@@ -223,63 +266,68 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		return visitChildren(ctx); 
 	}
 	
-	
-	public class Tasks extends Thread
+	public class InnerClass extends LabeledExprBaseVisitor<Integer>
 	{
-		private java.util.List<LabeledExprParser.StatContext> tree;
-		private ArrayList<String> mutexList;
-		private int uniqueInt;
-		String taskName;
-		List<LabeledExprParser.StatContext> st;
 		
-		Tasks(java.util.List<LabeledExprParser.StatContext> tree, ArrayList<String> mutexList, int uniqueInt, String taskName)
-		{	
-			this.tree = tree;
-			this.mutexList = mutexList;
-			this.uniqueInt = uniqueInt;
-			this.taskName = taskName;
-			st = treeMap.get(taskName);
-		}
-		
-		public void run()
+
+		public class Tasks extends Thread
 		{
-			for(int count=0;count<10;count++)
+			private java.util.List<LabeledExprParser.StatContext> tree;
+			private ArrayList<String> mutexList;
+			private int uniqueInt;
+			String taskName;
+			List<LabeledExprParser.StatContext> st;
+
+			Tasks(java.util.List<LabeledExprParser.StatContext> tree, ArrayList<String> mutexList, int uniqueInt, String taskName)
+			{	
+				this.tree = tree;
+				this.mutexList = mutexList;
+				this.uniqueInt = uniqueInt;
+				this.taskName = taskName;
+				st = treeMap.get(taskName);
+			}
+
+			public void run()
 			{
-				for(String s: mutexList)
+				for(int count=0;count<10;count++)
 				{
-					try {
-						muMap.get(s).acquire();
-						//System.out.println("acquired " + s +" by " + "pilosopher "+ uniqueInt);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}			
-				}
-				for(LabeledExprParser.StatContext stat: tree)
-				{
-					visit(stat);
-					try {
-						Thread.sleep(10);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					for(String s: mutexList)
+					{
+						try {
+							muMap.get(s).acquire();
+							//System.out.println("acquired " + s +" by " + "pilosopher "+ uniqueInt);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}			
 					}
+					for(LabeledExprParser.StatContext stat: tree)
+					{
+						visit(stat);
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					for(String s: mutexList)
+					{
+						muMap.get(s).release();
+						//System.out.println("released " +s+" by " + "pilosopher "+ uniqueInt);
+					}
+
+					for(LabeledExprParser.StatContext s : st)
+					{
+						visit(s);
+					}
+
+					System.out.println(" ");	
 				}
-				for(String s: mutexList)
-				{
-					muMap.get(s).release();
-					//System.out.println("released " +s+" by " + "pilosopher "+ uniqueInt);
-				}
-				
-				for(LabeledExprParser.StatContext s : st)
-				{
-					visit(s);
-				}
-				
-				System.out.println(" ");	
 			}
 		}
 	}
+
 	
 }
 

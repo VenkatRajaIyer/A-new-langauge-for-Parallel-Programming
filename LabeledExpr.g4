@@ -2,7 +2,8 @@ grammar LabeledExpr;
 
 prog: stat+ ;
 
-stat:function NEWLINE  					#justcreatefunction	
+stat:function NEWLINE  					#justcreatefunction
+	| function_call                     #call_a_function	
 	| 'if' condExpr ':' NEWLINE expr	#ifStat
 	| printStat							#printStm
 	| sVars								#createsVars1
@@ -13,6 +14,8 @@ stat:function NEWLINE  					#justcreatefunction
 //	| pstat	NEWLINE						#parallelStat				 
 	| NEWLINE 							#blank
 	;
+	
+main: 'main()' NEWLINE* '{' NEWLINE* stat+ NEWLINE*'}' NEWLINE+ #writemain;
 
 assignStat: 'int'? ID '=' expr NEWLINE 		#assignInt
 		  | 'string'? ID '=' STR NEWLINE 	#assignStr;
@@ -111,6 +114,8 @@ params: ID
 fparams: parametersType ID 				
 	  | fparams ',' parametersType ID 
 	  ;
+
+function_call: ID '('params*')' NEWLINE+ #call_function;
 	  
 parametersType: fvoid | finteger | fchar | fstring;	  
 	  

@@ -1,6 +1,25 @@
-int a = 5
-println(5)
 
+test()
+/*
+int a
+println(a)
+a=5
+void test ()
+{
+	int b = 5
+	int c = f
+	println(b)
+}
+
+main()
+{
+  
+}
+*/
+
+
+
+/*test(a) 
 {@
 shared
 {
@@ -28,3 +47,4 @@ critical(chop_a, chop_b)
 println("exited 2")
 }
 @}
+*/

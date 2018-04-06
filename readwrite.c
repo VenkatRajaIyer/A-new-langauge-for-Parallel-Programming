@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<pthread.h>
 #include<semaphore.h>
+#include<unistd.h>
 
 sem_t mutex;
 sem_t wrt;
