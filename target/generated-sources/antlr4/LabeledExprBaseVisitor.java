@@ -10,6 +10,8 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 
 	@Override public T visitParametersType(LabeledExprParser.ParametersTypeContext ctx) { return visitChildren(ctx); }
 
+	@Override public T visitCall_function(LabeledExprParser.Call_functionContext ctx) { return visitChildren(ctx); }
+
 	@Override public T visitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitCreatesVars1(LabeledExprParser.CreatesVars1Context ctx) { return visitChildren(ctx); }
@@ -19,6 +21,8 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	@Override public T visitCndExpr(LabeledExprParser.CndExprContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitObject(LabeledExprParser.ObjectContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitCall_a_function(LabeledExprParser.Call_a_functionContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitFinteger(LabeledExprParser.FintegerContext ctx) { return visitChildren(ctx); }
 
@@ -34,9 +38,13 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 
 	@Override public T visitCreatefunction(LabeledExprParser.CreatefunctionContext ctx) { return visitChildren(ctx); }
 
+	@Override public T visitWritemain(LabeledExprParser.WritemainContext ctx) { return visitChildren(ctx); }
+
 	@Override public T visitFparams(LabeledExprParser.FparamsContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitCreateMain(LabeledExprParser.CreateMainContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitPrintStm(LabeledExprParser.PrintStmContext ctx) { return visitChildren(ctx); }
 
@@ -56,9 +64,9 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 
 	@Override public T visitInt(LabeledExprParser.IntContext ctx) { return visitChildren(ctx); }
 
-	@Override public T visitAssignStr(LabeledExprParser.AssignStrContext ctx) { return visitChildren(ctx); }
-
 	@Override public T visitAddSub(LabeledExprParser.AddSubContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitAssignStr(LabeledExprParser.AssignStrContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitParens(LabeledExprParser.ParensContext ctx) { return visitChildren(ctx); }
 

@@ -22,9 +22,9 @@ public class Calc {
 	CommonTokenStream tokens = new CommonTokenStream(lexer);
 	LabeledExprParser parser = new LabeledExprParser(tokens);
 	ParseTree tree = parser.prog();
-//	EvalVisitor eval = new EvalVisitor();
-//	eval.visit(tree);	
-	TesterClass t = new TesterClass();
-	t.visit(tree);
+	EvalVisitor eval = new EvalVisitor();
+	eval.visit(tree);	
+//	TesterClass t = new TesterClass();
+//	t.visit(tree);
 	}
 }

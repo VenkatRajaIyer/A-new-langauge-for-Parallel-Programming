@@ -2,16 +2,16 @@ grammar LabeledExpr;
 
 prog: stat+ ;
 
-stat:function NEWLINE  					#justcreatefunction
+stat:
+     main								#createMain	
+	|function NEWLINE  					#justcreatefunction
 	| function_call                     #call_a_function	
 	| 'if' condExpr ':' NEWLINE expr	#ifStat
 	| printStat							#printStm
 	| sVars								#createsVars1
 	| assignStat						#assignStm
 	| newparallel NEWLINE				#asignParallel
-//	| pclassDef NEWLINE					#parallelclass
-//	| sClassDef NEWLINE					#sharedclassDef
-//	| pstat	NEWLINE						#parallelStat				 
+	| main								#createMain				 
 	| NEWLINE 							#blank
 	;
 	

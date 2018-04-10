@@ -12,6 +12,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterParametersType(LabeledExprParser.ParametersTypeContext ctx);
 	void exitParametersType(LabeledExprParser.ParametersTypeContext ctx);
 
+	void enterCall_function(LabeledExprParser.Call_functionContext ctx);
+	void exitCall_function(LabeledExprParser.Call_functionContext ctx);
+
 	void enterJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
 	void exitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
 
@@ -26,6 +29,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterObject(LabeledExprParser.ObjectContext ctx);
 	void exitObject(LabeledExprParser.ObjectContext ctx);
+
+	void enterCall_a_function(LabeledExprParser.Call_a_functionContext ctx);
+	void exitCall_a_function(LabeledExprParser.Call_a_functionContext ctx);
 
 	void enterFinteger(LabeledExprParser.FintegerContext ctx);
 	void exitFinteger(LabeledExprParser.FintegerContext ctx);
@@ -48,11 +54,17 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterCreatefunction(LabeledExprParser.CreatefunctionContext ctx);
 	void exitCreatefunction(LabeledExprParser.CreatefunctionContext ctx);
 
+	void enterWritemain(LabeledExprParser.WritemainContext ctx);
+	void exitWritemain(LabeledExprParser.WritemainContext ctx);
+
 	void enterFparams(LabeledExprParser.FparamsContext ctx);
 	void exitFparams(LabeledExprParser.FparamsContext ctx);
 
 	void enterAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx);
 	void exitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx);
+
+	void enterCreateMain(LabeledExprParser.CreateMainContext ctx);
+	void exitCreateMain(LabeledExprParser.CreateMainContext ctx);
 
 	void enterPrintStm(LabeledExprParser.PrintStmContext ctx);
 	void exitPrintStm(LabeledExprParser.PrintStmContext ctx);
@@ -81,11 +93,11 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterInt(LabeledExprParser.IntContext ctx);
 	void exitInt(LabeledExprParser.IntContext ctx);
 
-	void enterAssignStr(LabeledExprParser.AssignStrContext ctx);
-	void exitAssignStr(LabeledExprParser.AssignStrContext ctx);
-
 	void enterAddSub(LabeledExprParser.AddSubContext ctx);
 	void exitAddSub(LabeledExprParser.AddSubContext ctx);
+
+	void enterAssignStr(LabeledExprParser.AssignStrContext ctx);
+	void exitAssignStr(LabeledExprParser.AssignStrContext ctx);
 
 	void enterParens(LabeledExprParser.ParensContext ctx);
 	void exitParens(LabeledExprParser.ParensContext ctx);

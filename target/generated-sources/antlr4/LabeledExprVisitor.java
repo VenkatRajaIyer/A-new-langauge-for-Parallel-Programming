@@ -9,6 +9,8 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitParametersType(LabeledExprParser.ParametersTypeContext ctx);
 
+	T visitCall_function(LabeledExprParser.Call_functionContext ctx);
+
 	T visitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
 
 	T visitCreatesVars1(LabeledExprParser.CreatesVars1Context ctx);
@@ -18,6 +20,8 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 	T visitCndExpr(LabeledExprParser.CndExprContext ctx);
 
 	T visitObject(LabeledExprParser.ObjectContext ctx);
+
+	T visitCall_a_function(LabeledExprParser.Call_a_functionContext ctx);
 
 	T visitFinteger(LabeledExprParser.FintegerContext ctx);
 
@@ -33,9 +37,13 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitCreatefunction(LabeledExprParser.CreatefunctionContext ctx);
 
+	T visitWritemain(LabeledExprParser.WritemainContext ctx);
+
 	T visitFparams(LabeledExprParser.FparamsContext ctx);
 
 	T visitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx);
+
+	T visitCreateMain(LabeledExprParser.CreateMainContext ctx);
 
 	T visitPrintStm(LabeledExprParser.PrintStmContext ctx);
 
@@ -55,9 +63,9 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitInt(LabeledExprParser.IntContext ctx);
 
-	T visitAssignStr(LabeledExprParser.AssignStrContext ctx);
-
 	T visitAddSub(LabeledExprParser.AddSubContext ctx);
+
+	T visitAssignStr(LabeledExprParser.AssignStrContext ctx);
 
 	T visitParens(LabeledExprParser.ParensContext ctx);
 

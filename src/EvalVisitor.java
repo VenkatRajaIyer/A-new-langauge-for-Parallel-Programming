@@ -5,15 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
-import org.antlr.v4.runtime.RuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
-
-
-
-
-
-
-
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 /*
 		 * capture the statements to be executed in a hashmap
@@ -24,21 +15,17 @@ import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 		 */
 public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	
-	Map<String, Integer> memory = new HashMap<String, Integer>();
-	Map<String, String> memoryStr = new HashMap<String, String>();
-	Map<String, Integer> dataType = new HashMap<String, Integer>();
-	Map<String, List<LabeledExprParser.StatContext>> treeMap = new HashMap<String, List<LabeledExprParser.StatContext>>();
-	HashMap<String, Mutex> muMap = new HashMap<String, Mutex>();
+	HashMap<String, Integer> globalMemory = new HashMap<String, Integer>(); //ID : Value 
+	Map<String, List<LabeledExprParser.StatContext>> taskNameTree = new HashMap<String, List<LabeledExprParser.StatContext>>();
+	HashMap<String, Mutex> taskMutexes = new HashMap<String, Mutex>();
 	HashSet<Tasks> critical = new HashSet<Tasks>();
 	
 	
 	/////New Hash Maps///////
-	HashMap<String, Integer> globalHM = new HashMap<String, Integer>(); ///same as memory
+	HashMap<String, Integer> mainMemory = new HashMap<String, Integer>(); ///same as memory
 	HashMap<String, FunctionCreate> functionHM = new HashMap<String, FunctionCreate>();
-	HashMap<String, Stack<HashMap<String, Integer>>> currentHM= new HashMap<String, Stack<HashMap<String, Integer>>>(); 
+	Stack<HashMap<String, Integer>> currentHM= new Stack<HashMap<String, Integer>>();
 	
-	private final int INTEGERTYPE = 0;
-	private final int STRINGTYPE = 1;
 	boolean strType = false;
 	private EvalVisitorString evalVisitorString = new EvalVisitorString();
 	
@@ -57,21 +44,22 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		return 0;
 	}
 	
+	
 	@Override
 	public Integer visitCall_function(LabeledExprParser.Call_functionContext ctx)
 	{
-		String call = ctx.ID().getText();
-//		String params = ctx.params().getText();
-		
-		return 0;
+		FunctionCall fc= new FunctionCall(functionHM, globalMemory);
+		List<LabeledExprParser.StatContext> pt = fc.visitCall_function(ctx);
+		for(LabeledExprParser.StatContext st: pt)
+			fc.visit(st);
+		return 1;
 	}
 	
 	@Override        ////main function/////
 	public Integer visitWritemain(LabeledExprParser.WritemainContext ctx)
 	{
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		ctx.stat();
-		
+//		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		visitChildren(ctx);
 		return 0;
 	}
 	
@@ -80,8 +68,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	{
 		String id = ctx.ID().getText();
 		int value = visit(ctx.expr());
-		memory.put(id, value);
-		dataType.put(id, INTEGERTYPE);
+		globalMemory.put(id, value);
 		return value;
 	}
 	
@@ -111,10 +98,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	{
 		String id = ctx.ID().getText();
 		//Try getting to know the parent
-		if(memory.containsKey(id)) return memory.get(id);
-		else if (memoryStr.containsKey(id)){
-			strType = true;
-		}
+		if(globalMemory.containsKey(id)) return globalMemory.get(id);
 		return 0;
 	}
 	
@@ -203,8 +187,6 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		String id = ctx.ID().getText();
 		String value = ctx.STR().getText();
 		evalVisitorString.visitAssignStr(id, value);
-		memoryStr.put(id, value);
-		dataType.put(id, STRINGTYPE);
 		return 0;
 	}
 	
@@ -214,9 +196,10 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		return visitChildren(ctx); 
 	}
 	
-	@Override public Integer visitNewTask(LabeledExprParser.NewTaskContext ctx) 
+	@Override 
+	public Integer visitNewTask(LabeledExprParser.NewTaskContext ctx) 
 	{ 
-		treeMap.put(ctx.ID().getText(), ctx.stat());
+		taskNameTree.put(ctx.ID().getText(), ctx.stat());
 		visit(ctx.critSecParams());
 		/*
 		 * TODO - This is it.. the apocalypse
@@ -228,16 +211,14 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	@Override
 	public Integer visitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx)
 	{
-		String value = ctx.params().getText();
-		Utility utility = new Utility();
-		ArrayList<String> list = utility.parseData(value);
+//		String value = ctx.params().getText();
+//		Utility utility = new Utility();
+//		ArrayList<String> list = utility.parseData(value);
 		/*
 		 * capture the statements to be executed in a hashmap
 		 */
-		LabeledExprParser.NewTaskContext nt = (LabeledExprParser.NewTaskContext) ctx.getParent();
-		String taskName = nt.ID().getText();
-		
-		critical.add(new Tasks(ctx.stat(), list, ++count, taskName));		
+//		LabeledExprParser.NewTaskContext nt = (LabeledExprParser.NewTaskContext) ctx.getParent();
+//		String taskName = nt.ID().getText();
 		return 1;
 	}
 	
@@ -253,13 +234,14 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		
 		for(String s: list)
 		{
-			muMap.put(s, new Mutex());
+			taskMutexes.put(s, new Mutex());
 		}
 		System.out.println();
 		return visitChildren(ctx); 
 	}
 	
-	@Override public Integer visitEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx) 
+	@Override 
+	public Integer visitEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx) 
 	{ 
 		for(Tasks t:critical)
 			t.start();
@@ -274,7 +256,6 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		{
 			private java.util.List<LabeledExprParser.StatContext> tree;
 			private ArrayList<String> mutexList;
-			private int uniqueInt;
 			String taskName;
 			List<LabeledExprParser.StatContext> st;
 
@@ -282,9 +263,8 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 			{	
 				this.tree = tree;
 				this.mutexList = mutexList;
-				this.uniqueInt = uniqueInt;
 				this.taskName = taskName;
-				st = treeMap.get(taskName);
+				st = taskNameTree.get(taskName);
 			}
 
 			public void run()
@@ -294,7 +274,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 					for(String s: mutexList)
 					{
 						try {
-							muMap.get(s).acquire();
+							taskMutexes.get(s).acquire();
 							//System.out.println("acquired " + s +" by " + "pilosopher "+ uniqueInt);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
@@ -313,7 +293,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 					}
 					for(String s: mutexList)
 					{
-						muMap.get(s).release();
+						taskMutexes.get(s).release();
 						//System.out.println("released " +s+" by " + "pilosopher "+ uniqueInt);
 					}
 
