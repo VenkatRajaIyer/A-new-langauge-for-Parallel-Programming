@@ -8,6 +8,7 @@ The grammar file and the Application are still under construction.
 Eclipse Setup Instructions are shown below: To https://github.com/antlr4ide/antlr4ide
 
 Steps to run the project using the command line terminal:
-l. Download the Parallelo jar and the shell script
-l. Add the path to the shell script
-l. Copy the jar file to bin directory
+
+1. Download the Parallelo jar and the shell script
+2. Add the path to the shell script
+3. Copy the jar file to bin directory
