@@ -1,39 +1,35 @@
 
-test()
 /*
 int a
 println(a)
 a=5
-void test ()
-{
-	int b = 5
-	int c = f
-	println(b)
-}
-
-main()
-{
-  
-}
 */
-
-
-
-/*test(a) 
-{@
-shared
+int test(int b)
 {
-chop_a, chop_b, chop_c
+	x = 5
+        println("Value of x Inside the called function: ")
+	println(x)
+	return b
 }
+
+int testing(int x)
+{
+	x = 6
+        println("Value of x Inside the called function: ")
+	println(x)
+	return x
+}
+
 
 task a
 {
-critical (chop_a, chop_b, chop_c)
+critical (chop_a, chop_b)
 {
-	println("eating 1")
-	println("finished eating 1")
+	println("eating 5")
+	test()
+	println("finished eating 5")
 }
-println("exited 1")
+println("exited 5")
 }
 
 
@@ -41,10 +37,26 @@ task b
 {
 critical(chop_a, chop_b)
 {
-	println("eating 2")
-	println("finished eating 2")
+	println("eating 6")
+	testing()
+	println("finished eating 6")
 }
-println("exited 2")
+println("exited 6")
+
 }
-@}
+
+
+main()
+{
+/*  
+  parallelo.task(a, chop_a, chop_b)
+  parallelo.task(a, chop_b, chop_c)
+  parallelo.task(a, chop_c, chop_d)
+  parallelo.task(a, chop_d, chop_e)
+  parallelo.task(a, chop_e, chop_a)
 */
+  parallelo.run(a, b)
+}
+
+
+
