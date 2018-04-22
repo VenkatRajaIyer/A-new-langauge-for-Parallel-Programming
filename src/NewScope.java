@@ -113,5 +113,4 @@ public class NewScope extends LabeledExprBaseVisitor<Integer> {
 		System.out.println(value.substring(1,value.length()-1));
 		return 0;
 	}
-
 }

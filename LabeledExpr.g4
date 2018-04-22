@@ -11,9 +11,13 @@ stat:
 	| sVars								#createsVars1
 	| assignStat						#assignStm
 	| newparallel NEWLINE				#asignParallel
-	| main								#createMain				 
+	| par NEWLINE						#parallelo
+	| tasks NEWLINE						#tsks
+//	| main								#createMain				 
 	| NEWLINE 							#blank
 	;
+par: 'parallelo.run' '('params')'		#parallleloRuntime;
+
 	
 main: 'main()' NEWLINE* '{' NEWLINE* stat+ NEWLINE*'}' NEWLINE+ #writemain;
 
@@ -29,55 +33,6 @@ printStat: 'print' '(' expr ')' NEWLINE 	#printExpr
 
 function: parametersType ID '('fparams')' NEWLINE* '{' NEWLINE* stat* NEWLINE* returnstatement NEWLINE* '}' #createfunction ;
 returnstatement: 'return' ID  #returnfromfunction;
-
-	
-/*
- * Parallel Class-- asumes the data should loop 10 times
- */
-/*
-pclassDef: 'parallel' 'class' ID NEWLINE* '{' pClassMethods '}' ;
-pClassMethods: NEWLINE* sharedObjects+ constructor? pCritic pAsynch?  ;
-sharedObjects: sObjectName ;
-sObjectName: sClassName ID NEWLINE;
-pAsynch: stat+ ;
-pCritic: 'critical' NEWLINE* '{' stat+ '}' NEWLINE;
-*/
-/* Parallel Class Ends */
- 
-/*
- * Shared Class
- */
-  
-/*
- * sClassDef: 'shared' 'class' ID NEWLINE* '{' NEWLINE* sVars+ constructor '}' ;
- * sClassName: 'shared' ID ;
- */
-/* Shared Class Ends */
-
-/*
- * Common to classes
- */
- 
-/*
-constructor: 'constructor' '(' list* ')' NEWLINE* '{' stat+ '}' NEWLINE;
-list: ID
-	| list ',' ID
-	;
-methods: STR NEWLINE* '(' NEWLINE* ')' ;
-*/
-
-/*Common classes end */ 
-
-/*
-pstat: 'parallel' '(' threadArray ',' object')'
-	 | 'parallel' '(' threadArray ',' 'NULL' ')' 
-	 ;
-*/
-/*Paralle block ends - May not be used*/
-
-/* 
-parallel: '{@' NEWLINE* sharedValues NEWLINE* tasks+ NEWLINE* critSecParams NEWLINE* '@}' #newParallelStruct ;
-*/
 
 sVars: 'int' ID NEWLINE;
 
@@ -101,11 +56,13 @@ object: ID ;
 
 threadArray: object '[' INT ']' ;
  
-tasks: NEWLINE* 'task' ID NEWLINE* '{' NEWLINE* stat* critSecParams stat* NEWLINE* '}'	#newTask ;
-	 
-critSec : NEWLINE* 'critical' NEWLINE* '{' NEWLINE* stat NEWLINE* '}' #criticalSection ;
+tasks: NEWLINE* 'task' ID NEWLINE* '{' NEWLINE* stat* NEWLINE* 'critical' '(' params ')' NEWLINE* '{' NEWLINE* critaicalStat+ NEWLINE* '}' stat* NEWLINE* '}'	#newTask ;
+critaicalStat: stat			#criticalStatements;
 
-critSecParams : NEWLINE* 'critical' '(' params ')' NEWLINE* '{' NEWLINE* stat+ NEWLINE* '}' #criticalSectionWithParams ;
+	 
+//critSec : NEWLINE* 'critical' NEWLINE* '{' NEWLINE* stat NEWLINE* '}' #criticalSection ;
+
+//critSecParams :  #criticalSectionWithParams ;
 
 params: ID 				
 	  | params ',' ID

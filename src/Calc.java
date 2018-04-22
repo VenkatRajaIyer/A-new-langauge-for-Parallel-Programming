@@ -24,7 +24,5 @@ public class Calc {
 	ParseTree tree = parser.prog();
 	EvalVisitor eval = new EvalVisitor();
 	eval.visit(tree);	
-//	TesterClass t = new TesterClass();
-//	t.visit(tree);
 	}
 }

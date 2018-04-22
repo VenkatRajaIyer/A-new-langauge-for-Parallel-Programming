@@ -16,14 +16,14 @@ import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	
 	HashMap<String, Integer> globalMemory = new HashMap<String, Integer>(); //ID : Value 
-	Map<String, List<LabeledExprParser.StatContext>> taskNameTree = new HashMap<String, List<LabeledExprParser.StatContext>>();
-	HashMap<String, Mutex> taskMutexes = new HashMap<String, Mutex>();
+	HashMap<String, ArrayList<String>> taskMutexes = new HashMap<String, ArrayList<String>>();
+	HashMap<String, Mutex> allMutexes = new HashMap<String, Mutex>();
 	HashSet<Tasks> critical = new HashSet<Tasks>();
-	
 	
 	/////New Hash Maps///////
 	HashMap<String, Integer> mainMemory = new HashMap<String, Integer>(); ///same as memory
 	HashMap<String, FunctionCreate> functionHM = new HashMap<String, FunctionCreate>();
+	HashMap<String, TaskCreate> taskContents = new HashMap<String, TaskCreate>();
 	Stack<HashMap<String, Integer>> currentHM= new Stack<HashMap<String, Integer>>();
 	
 	boolean strType = false;
@@ -58,8 +58,9 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	@Override        ////main function/////
 	public Integer visitWritemain(LabeledExprParser.WritemainContext ctx)
 	{
-//		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		visitChildren(ctx);
+		for(Tasks t: critical)
+			t.start();
 		return 0;
 	}
 	
@@ -191,109 +192,83 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	}
 	
 	@Override 
-	public Integer visitAnotherParallelStruct(LabeledExprParser.AnotherParallelStructContext ctx)
-	{ 
-		return visitChildren(ctx); 
-	}
-	
-	@Override 
 	public Integer visitNewTask(LabeledExprParser.NewTaskContext ctx) 
 	{ 
-		taskNameTree.put(ctx.ID().getText(), ctx.stat());
-		visit(ctx.critSecParams());
-		/*
-		 * TODO - This is it.. the apocalypse
-		 */
-		//visit(ctx.stat(1));
-		return 1;  
-	}
-	
-	@Override
-	public Integer visitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx)
-	{
-//		String value = ctx.params().getText();
-//		Utility utility = new Utility();
-//		ArrayList<String> list = utility.parseData(value);
-		/*
-		 * capture the statements to be executed in a hashmap
-		 */
-//		LabeledExprParser.NewTaskContext nt = (LabeledExprParser.NewTaskContext) ctx.getParent();
-//		String taskName = nt.ID().getText();
-		return 1;
-	}
-	
-	@Override 
-	public Integer visitSharedParams(LabeledExprParser.SharedParamsContext ctx) 
-	{ 
-		/*
-		 * Receive all the parameters of criticalSection and create mutex out of them 
-		 */
+		String taskName = ctx.ID().getText();
+		TaskCreate c = new TaskCreate(ctx);
+		taskContents.put(taskName, c);
+		
 		String value = ctx.params().getText();
 		Utility ut = new Utility();
 		ArrayList<String> list = ut.parseData(value);
-		
+		ArrayList<String> mutexList = new ArrayList<String>(); 
 		for(String s: list)
 		{
-			taskMutexes.put(s, new Mutex());
+			mutexList.add(s);
+			if(!allMutexes.containsKey(s))
+				allMutexes.put(s, new Mutex());
 		}
-		System.out.println();
-		return visitChildren(ctx); 
+		taskMutexes.put(taskName, mutexList);
+		return 1;  
 	}
 	
 	@Override 
-	public Integer visitEndParallelStruct(LabeledExprParser.EndParallelStructContext ctx) 
+	public Integer visitParallleloRuntime(LabeledExprParser.ParallleloRuntimeContext ctx) 
 	{ 
-		for(Tasks t:critical)
-			t.start();
-		return visitChildren(ctx); 
+		Utility ut = new Utility();
+		ArrayList<String> tasks= ut.parseData(ctx.params().getText());
+		for(String task: tasks)
+		{
+			TaskCreate taskObj = taskContents.get(task);
+			critical.add(new Tasks(taskObj.getStat(), taskMutexes.get(task), task));
+		}
+		return 1; 
 	}
 	
-	public class InnerClass extends LabeledExprBaseVisitor<Integer>
+	public class Tasks extends Thread
 	{
-		
-
-		public class Tasks extends Thread
-		{
-			private java.util.List<LabeledExprParser.StatContext> tree;
 			private ArrayList<String> mutexList;
-			String taskName;
-			List<LabeledExprParser.StatContext> st;
+			private String taskName;
+			private List<LabeledExprParser.StatContext> st;
+			private List<LabeledExprParser.CritaicalStatContext> cst;
 
-			Tasks(java.util.List<LabeledExprParser.StatContext> tree, ArrayList<String> mutexList, int uniqueInt, String taskName)
+			Tasks(java.util.List<LabeledExprParser.StatContext> tree, ArrayList<String> mutexList, String taskName)
 			{	
-				this.tree = tree;
 				this.mutexList = mutexList;
 				this.taskName = taskName;
-				st = taskNameTree.get(taskName);
+				this.st = taskContents.get(taskName).getStat();
+				this.cst = taskContents.get(taskName).getCriticalStat();
 			}
-
 			public void run()
 			{
+				st = taskContents.get(taskName).getStat();
+				cst = taskContents.get(taskName).getCriticalStat();
 				for(int count=0;count<10;count++)
 				{
 					for(String s: mutexList)
 					{
 						try {
-							taskMutexes.get(s).acquire();
+							allMutexes.get(s).acquire();
 							//System.out.println("acquired " + s +" by " + "pilosopher "+ uniqueInt);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}			
 					}
-					for(LabeledExprParser.StatContext stat: tree)
+					for(LabeledExprParser.CritaicalStatContext stat: cst)
 					{
 						visit(stat);
 						try {
-							Thread.sleep(10);
+							Thread.sleep(100);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
+
 					for(String s: mutexList)
 					{
-						taskMutexes.get(s).release();
+						allMutexes.get(s).release();
 						//System.out.println("released " +s+" by " + "pilosopher "+ uniqueInt);
 					}
 
@@ -301,13 +276,8 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 					{
 						visit(s);
 					}
-
-					System.out.println(" ");	
 				}
 			}
-		}
-	}
-
-	
+	 }
 }
 
