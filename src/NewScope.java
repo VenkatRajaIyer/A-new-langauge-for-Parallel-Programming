@@ -113,4 +113,15 @@ public class NewScope extends LabeledExprBaseVisitor<Integer> {
 		System.out.println(value.substring(1,value.length()-1));
 		return 0;
 	}
+	
+	@Override
+	public Integer visitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx)
+	{
+		//System.out.print(scopeMemory.get(ctx.ID().getText()));
+		System.out.println("Test");
+		System.out.println("New Sope " + scopeMemory.get(ctx.ID().getText()));
+		int returnVal = scopeMemory.get(ctx.ID().getText());
+		return returnVal;
+		
+	}
 }

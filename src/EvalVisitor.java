@@ -24,7 +24,6 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	HashMap<String, Integer> mainMemory = new HashMap<String, Integer>(); ///same as memory
 	HashMap<String, FunctionCreate> functionHM = new HashMap<String, FunctionCreate>();
 	HashMap<String, TaskCreate> taskContents = new HashMap<String, TaskCreate>();
-	Stack<HashMap<String, Integer>> currentHM= new Stack<HashMap<String, Integer>>();
 	
 	boolean strType = false;
 	private EvalVisitorString evalVisitorString = new EvalVisitorString();
@@ -44,15 +43,39 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		return 0;
 	}
 	
-	
+	/*
+	 * (non-Javadoc)
+	 * @see LabeledExprBaseVisitor#visitCall_function(LabeledExprParser.Call_functionContext)
+	 * creates an object of time
+	 */
 	@Override
 	public Integer visitCall_function(LabeledExprParser.Call_functionContext ctx)
 	{
-		FunctionCall fc= new FunctionCall(functionHM, globalMemory);
-		List<LabeledExprParser.StatContext> pt = fc.visitCall_function(ctx);
-		for(LabeledExprParser.StatContext st: pt)
-			fc.visit(st);
-		return 1;
+		HashMap<String, Integer> localMemory = new HashMap<String, Integer>();
+		String ids = ctx.params().getText();
+		Utility ut = new Utility();
+		ArrayList<String> list = ut.parseData(ids);
+		
+		//copying necessary contents from globalMemory to localMemory
+		for(String i: list)
+			localMemory.put(i, globalMemory.get(i));
+		
+		FunctionCall fc= new FunctionCall(functionHM, localMemory);
+		int a = fc.visitCall_function(ctx);
+		System.out.println("Returned value" + a);
+
+		return a;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see LabeledExprBaseVisitor#visitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext)
+	 * Copies values from the function's HM and stores it into the caller's HM
+	 */
+	@Override
+	public Integer visitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx)
+	{
+		return globalMemory.get(ctx.ID().getText());
 	}
 	
 	@Override        ////main function/////

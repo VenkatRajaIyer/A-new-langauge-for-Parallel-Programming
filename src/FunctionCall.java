@@ -3,33 +3,44 @@ import java.util.List;
 
 
 
-public class FunctionCall extends LabeledExprBaseVisitor<List<LabeledExprParser.StatContext>> {
+public class FunctionCall extends LabeledExprBaseVisitor<Integer> {
 	
 	HashMap<String, FunctionCreate> functionHM = new HashMap<String, FunctionCreate>();
-	HashMap<String, Integer> globalMemory = new HashMap<String, Integer>();
+	HashMap<String, Integer> localMemory = new HashMap<String, Integer>();
 
-	public FunctionCall(HashMap<String, FunctionCreate> functionHM, HashMap<String, Integer> globalMemory) {
+	public FunctionCall(HashMap<String, FunctionCreate> functionHM, HashMap<String, Integer> localMemory) {
 		// TODO Auto-generated constructor stub
 		this.functionHM = functionHM;
-		this.globalMemory = globalMemory;
+		this.localMemory = localMemory;
 	}
+	/*
+	 * (non-Javadoc)
+	 * @see LabeledExprBaseVisitor#visitCall_function(LabeledExprParser.Call_functionContext)
+	 * @params the current context, i.e., the function call statement
+	 * 
+	 */
 	@Override
-	public List<LabeledExprParser.StatContext> visitCall_function(LabeledExprParser.Call_functionContext ctx)
+	public Integer visitCall_function(LabeledExprParser.Call_functionContext ctx)
 	{
+		int returnValue = 0;
 		if(functionHM.containsKey(ctx.ID().getText()))
 		{
-			List<LabeledExprParser.StatContext> stats = (functionHM.get(ctx.ID().getText())).getStat();
-			NewScope functionScope = new NewScope(globalMemory);
+			List<LabeledExprParser.StatContext> stats = functionHM.get(ctx.ID().getText()).getStat();
+			NewScope functionScope = new NewScope(localMemory);
 			for (LabeledExprParser.StatContext statContext : stats) {
-				functionScope.visit(statContext);
+				returnValue = functionScope.visit(statContext);
+				System.out.println(returnValue);
 			}
 		}	
 		else
 		{
 				System.out.println("Not present in the function scope");
 		}
-		FunctionCreate fun =functionHM.get(ctx.ID().getText());
-		return fun.getStat();
+//		FunctionCreate fun =functionHM.get(ctx.ID().getText());
+//		return fun.getStat();
+		//return the values here
+		System.out.println("Value inside function " + returnValue);
+		return returnValue;
 	}	
 
 }

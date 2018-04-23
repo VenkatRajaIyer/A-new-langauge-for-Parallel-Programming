@@ -6,7 +6,7 @@ public class FunctionCreate {
 	private String ID;
 	private String fparams;
 	private List<LabeledExprParser.StatContext> stat;
-	private LabeledExprParser.ReturnstatementContext returnstatement;
+	//private LabeledExprParser.ReturnstatementContext returnstatement;
 	
 	public FunctionCreate(LabeledExprParser.CreatefunctionContext ctx)
 	{
@@ -14,7 +14,7 @@ public class FunctionCreate {
 		this.ID = ctx.ID().getText();
 		this.fparams = ctx.fparams().getText();
 		this.stat = ctx.stat();
-		this.returnstatement = ctx.returnstatement();
+		//this.returnstatement = ctx.returnstatement();
 	}
 
 	public String getParametersType() {
@@ -33,8 +33,8 @@ public class FunctionCreate {
 		return stat;
 	}
 
-	public LabeledExprParser.ReturnstatementContext getReturnstatement() {
-		return returnstatement;
-	}
+	//public LabeledExprParser.ReturnstatementContext getReturnstatement() {
+	//	return returnstatement;
+	//}
 	
 }
