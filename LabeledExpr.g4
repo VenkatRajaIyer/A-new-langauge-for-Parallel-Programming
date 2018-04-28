@@ -5,7 +5,7 @@ prog: stat+ ;
 stat:
      main								#createMain	
 	|function NEWLINE  					#justcreatefunction
-	| function_call                     #call_a_function	
+	| function_call  NEWLINE            #call_a_function	
 	| 'if' condExpr ':' NEWLINE expr	#ifStat
 	| printStat							#printStm
 	| sVars								#createsVars1
@@ -13,6 +13,7 @@ stat:
 	| newparallel NEWLINE				#asignParallel
 	| par NEWLINE						#parallelo
 	| tasks NEWLINE						#tsks
+	| returnstatement NEWLINE			#dummyreturn
 //	| main								#createMain				 
 	| NEWLINE 							#blank
 	;
@@ -31,7 +32,7 @@ printStat: 'print' '(' expr ')' NEWLINE 	#printExpr
 		 | 'println' '(' STR ')' NEWLINE 	#printlnStrExpr		;
 
 
-function: parametersType ID '('fparams')' NEWLINE* '{' NEWLINE* stat* NEWLINE* returnstatement NEWLINE* '}' #createfunction ;
+function: parametersType ID '('fparams')' NEWLINE* '{' NEWLINE* stat* NEWLINE* '}' #createfunction ;
 returnstatement: 'return' ID  #returnfromfunction;
 
 sVars: 'int' ID NEWLINE;
@@ -41,6 +42,7 @@ expr: expr op=('*'|'/') expr 			#MulDiv
 	| INT 								#int
 	| ID 								#id
 	| '('expr')' 						#parens
+	| function_call						#call_function1
 	;
 
 /*
@@ -71,8 +73,8 @@ params: ID
 fparams: parametersType ID 				
 	  | fparams ',' parametersType ID 
 	  ;
-
-function_call: ID '('params*')' NEWLINE+ #call_function;
+	  
+function_call: ID '('params')' #call_function;
 	  
 parametersType: fvoid | finteger | fchar | fstring;	  
 	  
