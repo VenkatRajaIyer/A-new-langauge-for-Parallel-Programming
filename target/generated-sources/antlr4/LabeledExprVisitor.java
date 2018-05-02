@@ -3,6 +3,10 @@ import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.Token;
 
 public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
+	T visitParallleloRuntime(LabeledExprParser.ParallleloRuntimeContext ctx);
+
+	T visitTsks(LabeledExprParser.TsksContext ctx);
+
 	T visitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 
 	T visitFchar(LabeledExprParser.FcharContext ctx);
@@ -10,6 +14,8 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 	T visitParametersType(LabeledExprParser.ParametersTypeContext ctx);
 
 	T visitCall_function(LabeledExprParser.Call_functionContext ctx);
+
+	T visitFunction_id(LabeledExprParser.Function_idContext ctx);
 
 	T visitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
 
@@ -33,8 +39,6 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx);
 
-	T visitCriticalSection(LabeledExprParser.CriticalSectionContext ctx);
-
 	T visitCreatefunction(LabeledExprParser.CreatefunctionContext ctx);
 
 	T visitWritemain(LabeledExprParser.WritemainContext ctx);
@@ -51,11 +55,13 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitAsignParallel(LabeledExprParser.AsignParallelContext ctx);
 
-	T visitAssignInt(LabeledExprParser.AssignIntContext ctx);
-
 	T visitAssignStm(LabeledExprParser.AssignStmContext ctx);
 
-	T visitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
+	T visitAssignInt(LabeledExprParser.AssignIntContext ctx);
+
+	T visitDummyreturn(LabeledExprParser.DummyreturnContext ctx);
+
+	T visitParallelo(LabeledExprParser.ParalleloContext ctx);
 
 	T visitBlank(LabeledExprParser.BlankContext ctx);
 
@@ -86,4 +92,8 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 	T visitSharedParams(LabeledExprParser.SharedParamsContext ctx);
 
 	T visitIfStat(LabeledExprParser.IfStatContext ctx);
+
+	T visitCriticalStatements(LabeledExprParser.CriticalStatementsContext ctx);
+
+	T visitFuncCall(LabeledExprParser.FuncCallContext ctx);
 }

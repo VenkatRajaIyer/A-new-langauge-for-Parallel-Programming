@@ -1,0 +1,3 @@
+#!/bin/bash    
+echo Running Parallelo
+java -jar ~/bin/Parallelo.jar $1

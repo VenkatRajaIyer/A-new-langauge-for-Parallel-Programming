@@ -4,6 +4,10 @@ import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements LabeledExprVisitor<T> {
+	@Override public T visitParallleloRuntime(LabeledExprParser.ParallleloRuntimeContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitTsks(LabeledExprParser.TsksContext ctx) { return visitChildren(ctx); }
+
 	@Override public T visitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitFchar(LabeledExprParser.FcharContext ctx) { return visitChildren(ctx); }
@@ -11,6 +15,8 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	@Override public T visitParametersType(LabeledExprParser.ParametersTypeContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitCall_function(LabeledExprParser.Call_functionContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitFunction_id(LabeledExprParser.Function_idContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx) { return visitChildren(ctx); }
 
@@ -34,8 +40,6 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 
 	@Override public T visitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx) { return visitChildren(ctx); }
 
-	@Override public T visitCriticalSection(LabeledExprParser.CriticalSectionContext ctx) { return visitChildren(ctx); }
-
 	@Override public T visitCreatefunction(LabeledExprParser.CreatefunctionContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitWritemain(LabeledExprParser.WritemainContext ctx) { return visitChildren(ctx); }
@@ -52,11 +56,13 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 
 	@Override public T visitAsignParallel(LabeledExprParser.AsignParallelContext ctx) { return visitChildren(ctx); }
 
-	@Override public T visitAssignInt(LabeledExprParser.AssignIntContext ctx) { return visitChildren(ctx); }
-
 	@Override public T visitAssignStm(LabeledExprParser.AssignStmContext ctx) { return visitChildren(ctx); }
 
-	@Override public T visitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitAssignInt(LabeledExprParser.AssignIntContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitDummyreturn(LabeledExprParser.DummyreturnContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitParallelo(LabeledExprParser.ParalleloContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitBlank(LabeledExprParser.BlankContext ctx) { return visitChildren(ctx); }
 
@@ -87,4 +93,8 @@ public class LabeledExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	@Override public T visitSharedParams(LabeledExprParser.SharedParamsContext ctx) { return visitChildren(ctx); }
 
 	@Override public T visitIfStat(LabeledExprParser.IfStatContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitCriticalStatements(LabeledExprParser.CriticalStatementsContext ctx) { return visitChildren(ctx); }
+
+	@Override public T visitFuncCall(LabeledExprParser.FuncCallContext ctx) { return visitChildren(ctx); }
 }

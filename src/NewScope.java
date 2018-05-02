@@ -32,7 +32,7 @@ public class NewScope extends LabeledExprBaseVisitor<Integer> {
 			return scopeMemory.get(id);
 		else if (globalMemory.containsKey(id)) 
 			return globalMemory.get(id);
-		return null;
+		return 0;
 	}
 	
 	@Override
@@ -95,7 +95,7 @@ public class NewScope extends LabeledExprBaseVisitor<Integer> {
 	{
 		int value = visit(ctx.expr());
 		System.out.println(value);
-		return 1;
+		return 0;
 	}
 	
 	@Override
@@ -118,10 +118,11 @@ public class NewScope extends LabeledExprBaseVisitor<Integer> {
 	public Integer visitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx)
 	{
 		//System.out.print(scopeMemory.get(ctx.ID().getText()));
-		System.out.println("Test");
-		System.out.println("New Sope " + scopeMemory.get(ctx.ID().getText()));
-		int returnVal = scopeMemory.get(ctx.ID().getText());
+		int returnVal = 0;
+		if(scopeMemory.containsKey(ctx.ID().getText()))
+		{
+			returnVal = scopeMemory.get(ctx.ID().getText());
+		}
 		return returnVal;
-		
 	}
 }

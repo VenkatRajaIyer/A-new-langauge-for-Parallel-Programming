@@ -3,6 +3,12 @@ import org.antlr.v4.runtime.tree.*;
 import org.antlr.v4.runtime.Token;
 
 public interface LabeledExprListener extends ParseTreeListener {
+	void enterParallleloRuntime(LabeledExprParser.ParallleloRuntimeContext ctx);
+	void exitParallleloRuntime(LabeledExprParser.ParallleloRuntimeContext ctx);
+
+	void enterTsks(LabeledExprParser.TsksContext ctx);
+	void exitTsks(LabeledExprParser.TsksContext ctx);
+
 	void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 	void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 
@@ -14,6 +20,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterCall_function(LabeledExprParser.Call_functionContext ctx);
 	void exitCall_function(LabeledExprParser.Call_functionContext ctx);
+
+	void enterFunction_id(LabeledExprParser.Function_idContext ctx);
+	void exitFunction_id(LabeledExprParser.Function_idContext ctx);
 
 	void enterJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
 	void exitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
@@ -48,9 +57,6 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx);
 	void exitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx);
 
-	void enterCriticalSection(LabeledExprParser.CriticalSectionContext ctx);
-	void exitCriticalSection(LabeledExprParser.CriticalSectionContext ctx);
-
 	void enterCreatefunction(LabeledExprParser.CreatefunctionContext ctx);
 	void exitCreatefunction(LabeledExprParser.CreatefunctionContext ctx);
 
@@ -75,14 +81,17 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterAsignParallel(LabeledExprParser.AsignParallelContext ctx);
 	void exitAsignParallel(LabeledExprParser.AsignParallelContext ctx);
 
-	void enterAssignInt(LabeledExprParser.AssignIntContext ctx);
-	void exitAssignInt(LabeledExprParser.AssignIntContext ctx);
-
 	void enterAssignStm(LabeledExprParser.AssignStmContext ctx);
 	void exitAssignStm(LabeledExprParser.AssignStmContext ctx);
 
-	void enterCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
-	void exitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
+	void enterAssignInt(LabeledExprParser.AssignIntContext ctx);
+	void exitAssignInt(LabeledExprParser.AssignIntContext ctx);
+
+	void enterDummyreturn(LabeledExprParser.DummyreturnContext ctx);
+	void exitDummyreturn(LabeledExprParser.DummyreturnContext ctx);
+
+	void enterParallelo(LabeledExprParser.ParalleloContext ctx);
+	void exitParallelo(LabeledExprParser.ParalleloContext ctx);
 
 	void enterBlank(LabeledExprParser.BlankContext ctx);
 	void exitBlank(LabeledExprParser.BlankContext ctx);
@@ -128,4 +137,10 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterIfStat(LabeledExprParser.IfStatContext ctx);
 	void exitIfStat(LabeledExprParser.IfStatContext ctx);
+
+	void enterCriticalStatements(LabeledExprParser.CriticalStatementsContext ctx);
+	void exitCriticalStatements(LabeledExprParser.CriticalStatementsContext ctx);
+
+	void enterFuncCall(LabeledExprParser.FuncCallContext ctx);
+	void exitFuncCall(LabeledExprParser.FuncCallContext ctx);
 }

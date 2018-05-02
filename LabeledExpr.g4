@@ -13,8 +13,7 @@ stat:
 	| newparallel NEWLINE				#asignParallel
 	| par NEWLINE						#parallelo
 	| tasks NEWLINE						#tsks
-	| returnstatement NEWLINE			#dummyreturn
-//	| main								#createMain				 
+	| returnstatement 					#dummyreturn
 	| NEWLINE 							#blank
 	;
 par: 'parallelo.run' '('params')'		#parallleloRuntime;
@@ -33,7 +32,7 @@ printStat: 'print' '(' expr ')' NEWLINE 	#printExpr
 
 
 function: parametersType ID '('fparams')' NEWLINE* '{' NEWLINE* stat* NEWLINE* '}' #createfunction ;
-returnstatement: 'return' ID  #returnfromfunction;
+returnstatement: 'return' ID  NEWLINE #returnfromfunction;
 
 sVars: 'int' ID NEWLINE;
 
@@ -41,8 +40,8 @@ expr: expr op=('*'|'/') expr 			#MulDiv
 	| expr op=('+'|'-') expr 			#AddSub
 	| INT 								#int
 	| ID 								#id
+	| function_call						#funcCall
 	| '('expr')' 						#parens
-	| function_call						#call_function1
 	;
 
 /*
@@ -74,7 +73,7 @@ fparams: parametersType ID
 	  | fparams ',' parametersType ID 
 	  ;
 	  
-function_call: ID '('params')' #call_function;
+function_call: function_id '('params')' #call_function;
 	  
 parametersType: fvoid | finteger | fchar | fstring;	  
 	  
@@ -88,6 +87,7 @@ EQC : '==' ;
 NEQ : '!=' ;
 
 ID : [a-zA-Z_]+ ;
+function_id : ID ;
 INT : [0-9]+ ;
 
 fvoid : 'void';

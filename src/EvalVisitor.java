@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Stack;
 
 import com.sun.corba.se.impl.orbutil.concurrent.Mutex;
 /*
@@ -61,10 +59,8 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 			localMemory.put(i, globalMemory.get(i));
 		
 		FunctionCall fc= new FunctionCall(functionHM, localMemory);
-		int a = fc.visitCall_function(ctx);
-		System.out.println("Returned value" + a);
-
-		return a;
+		int returnedVal = fc.visitCall_function(ctx);
+		return returnedVal;
 	}
 	
 	/*
@@ -75,7 +71,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	@Override
 	public Integer visitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx)
 	{
-		return globalMemory.get(ctx.ID().getText());
+		return 0;
 	}
 	
 	@Override        ////main function/////

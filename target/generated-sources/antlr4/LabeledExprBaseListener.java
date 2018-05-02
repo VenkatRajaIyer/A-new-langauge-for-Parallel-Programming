@@ -6,6 +6,12 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.runtime.tree.ErrorNode;
 
 public class LabeledExprBaseListener implements LabeledExprListener {
+	@Override public void enterParallleloRuntime(LabeledExprParser.ParallleloRuntimeContext ctx) { }
+	@Override public void exitParallleloRuntime(LabeledExprParser.ParallleloRuntimeContext ctx) { }
+
+	@Override public void enterTsks(LabeledExprParser.TsksContext ctx) { }
+	@Override public void exitTsks(LabeledExprParser.TsksContext ctx) { }
+
 	@Override public void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 	@Override public void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 
@@ -17,6 +23,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterCall_function(LabeledExprParser.Call_functionContext ctx) { }
 	@Override public void exitCall_function(LabeledExprParser.Call_functionContext ctx) { }
+
+	@Override public void enterFunction_id(LabeledExprParser.Function_idContext ctx) { }
+	@Override public void exitFunction_id(LabeledExprParser.Function_idContext ctx) { }
 
 	@Override public void enterJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx) { }
 	@Override public void exitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx) { }
@@ -51,9 +60,6 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx) { }
 	@Override public void exitReturnfromfunction(LabeledExprParser.ReturnfromfunctionContext ctx) { }
 
-	@Override public void enterCriticalSection(LabeledExprParser.CriticalSectionContext ctx) { }
-	@Override public void exitCriticalSection(LabeledExprParser.CriticalSectionContext ctx) { }
-
 	@Override public void enterCreatefunction(LabeledExprParser.CreatefunctionContext ctx) { }
 	@Override public void exitCreatefunction(LabeledExprParser.CreatefunctionContext ctx) { }
 
@@ -78,14 +84,17 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterAsignParallel(LabeledExprParser.AsignParallelContext ctx) { }
 	@Override public void exitAsignParallel(LabeledExprParser.AsignParallelContext ctx) { }
 
-	@Override public void enterAssignInt(LabeledExprParser.AssignIntContext ctx) { }
-	@Override public void exitAssignInt(LabeledExprParser.AssignIntContext ctx) { }
-
 	@Override public void enterAssignStm(LabeledExprParser.AssignStmContext ctx) { }
 	@Override public void exitAssignStm(LabeledExprParser.AssignStmContext ctx) { }
 
-	@Override public void enterCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { }
-	@Override public void exitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { }
+	@Override public void enterAssignInt(LabeledExprParser.AssignIntContext ctx) { }
+	@Override public void exitAssignInt(LabeledExprParser.AssignIntContext ctx) { }
+
+	@Override public void enterDummyreturn(LabeledExprParser.DummyreturnContext ctx) { }
+	@Override public void exitDummyreturn(LabeledExprParser.DummyreturnContext ctx) { }
+
+	@Override public void enterParallelo(LabeledExprParser.ParalleloContext ctx) { }
+	@Override public void exitParallelo(LabeledExprParser.ParalleloContext ctx) { }
 
 	@Override public void enterBlank(LabeledExprParser.BlankContext ctx) { }
 	@Override public void exitBlank(LabeledExprParser.BlankContext ctx) { }
@@ -131,6 +140,12 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterIfStat(LabeledExprParser.IfStatContext ctx) { }
 	@Override public void exitIfStat(LabeledExprParser.IfStatContext ctx) { }
+
+	@Override public void enterCriticalStatements(LabeledExprParser.CriticalStatementsContext ctx) { }
+	@Override public void exitCriticalStatements(LabeledExprParser.CriticalStatementsContext ctx) { }
+
+	@Override public void enterFuncCall(LabeledExprParser.FuncCallContext ctx) { }
+	@Override public void exitFuncCall(LabeledExprParser.FuncCallContext ctx) { }
 
 	@Override public void enterEveryRule(ParserRuleContext ctx) { }
 	@Override public void exitEveryRule(ParserRuleContext ctx) { }
