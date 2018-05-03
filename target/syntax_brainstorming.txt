@@ -1,0 +1,60 @@
+some basic syntax:
+
+/*
+** Inspired by golang
+*/
+
+// main and methods
+
+func main(){
+	fmt.print(mul(val, val))
+	}
+	
+ func mul(x int, y int) int{
+	return x*y
+	}
+	
+// swapping a string
+
+package main
+
+import "fmt"
+
+func swap(x, y string) (string, string) {
+	return y, x
+}
+
+func main() {
+	a, b := swap("hello", "world")
+	fmt.Print(a, b)	// remember here we are doing a call by reference happens in the back end
+}
+
+/*
+** Inspired by Scala
+*/
+
+new can be used same as JAVA
+
+for(int i=0; i< chopistics.length; i++){
+			chopistics[i] = new Chopstick("C: "+i);
+		}
+		
+translates to:
+
+for (i <- 1 until chopistics.length){
+	chopsticks(i) = new Chopstick("C:" +i);
+	}
+	
+	
+// another one
+for(int i=0;i<philosophers.length;i++){
+			Log.msg("Thred "+ i);
+			Thread t= new Thread( philosophers[i]);
+			t.start();
+		}
+//translates to	
+	for (i <- 0 until philosophers.length) {
+      Log.msg("Thred " + i)
+      val t: Thread = new Thread(philosophers(i))
+      t.start()
+    }

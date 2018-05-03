@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Sealed: true
+Class-Path: . /home/venkat/Documents/Eclipse_ANTLR_IDE/antlr-4.0-complete.jar
+Main-Class: Calc
+

@@ -27,7 +27,6 @@ public class FunctionCall extends LabeledExprBaseVisitor<Integer> {
 		{
 			List<LabeledExprParser.StatContext> stats = functionHM.get(ctx.function_id().getText()).getStat();
 			NewScope functionScope = new NewScope(localMemory);
-			int i= 1;
 			for (LabeledExprParser.StatContext statContext : stats) {
 				returnValue = functionScope.visit(statContext);
 			}

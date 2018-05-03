@@ -78,8 +78,8 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	public Integer visitWritemain(LabeledExprParser.WritemainContext ctx)
 	{
 		visitChildren(ctx);
-		for(Tasks t: critical)
-			t.start();
+//		for(Tasks t: critical)
+//			t.start();
 		return 0;
 	}
 	
@@ -241,6 +241,14 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 			TaskCreate taskObj = taskContents.get(task);
 			critical.add(new Tasks(taskObj.getStat(), taskMutexes.get(task), task));
 		}
+		for(Tasks t: critical)
+			t.start();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 1; 
 	}
 	
@@ -278,7 +286,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 					{
 						visit(stat);
 						try {
-							Thread.sleep(100);
+							Thread.sleep(1);
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
