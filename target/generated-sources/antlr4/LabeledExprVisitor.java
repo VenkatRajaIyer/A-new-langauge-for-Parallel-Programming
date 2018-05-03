@@ -39,9 +39,13 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitDummyreturn(LabeledExprParser.DummyreturnContext ctx);
 
+	T visitDummywhile(LabeledExprParser.DummywhileContext ctx);
+
 	T visitParallelo(LabeledExprParser.ParalleloContext ctx);
 
 	T visitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
+
+	T visitWhileExpr(LabeledExprParser.WhileExprContext ctx);
 
 	T visitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx);
 
@@ -55,9 +59,9 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitPrintExpr(LabeledExprParser.PrintExprContext ctx);
 
-	T visitNewTask(LabeledExprParser.NewTaskContext ctx);
-
 	T visitFvoid(LabeledExprParser.FvoidContext ctx);
+
+	T visitNewTask(LabeledExprParser.NewTaskContext ctx);
 
 	T visitIfStat(LabeledExprParser.IfStatContext ctx);
 
@@ -69,9 +73,9 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 
 	T visitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 
-	T visitParametersType(LabeledExprParser.ParametersTypeContext ctx);
-
 	T visitFchar(LabeledExprParser.FcharContext ctx);
+
+	T visitParametersType(LabeledExprParser.ParametersTypeContext ctx);
 
 	T visitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
 
@@ -98,6 +102,8 @@ public interface LabeledExprVisitor<T> extends ParseTreeVisitor<T> {
 	T visitParams(LabeledExprParser.ParamsContext ctx);
 
 	T visitSVars(LabeledExprParser.SVarsContext ctx);
+
+	T visitWhileStat(LabeledExprParser.WhileStatContext ctx);
 
 	T visitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
 

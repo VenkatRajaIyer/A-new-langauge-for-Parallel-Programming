@@ -14,8 +14,16 @@ stat:
 	| par NEWLINE						#parallelo
 	| tasks NEWLINE						#tsks
 	| returnstatement 					#dummyreturn
+	| whilestatement 					#dummywhile
 	| NEWLINE 							#blank
 	;
+whilestatement: 'while' '(' whileExpr ')' NEWLINE* '{' NEWLINE* stat+ NEWLINE* '}'	#whileStat;
+
+whileExpr: condExpr
+		 | expr
+		 ;
+
+
 par: 'parallelo.run' '('params')'		#parallleloRuntime;
 
 	
@@ -77,7 +85,8 @@ function_call: function_id '('params')' #call_function;
 	  
 parametersType: fvoid | finteger | fchar | fstring;	  
 	  
-condExpr: expr op=('=='|'!=') expr	#cndExpr;
+condExpr: expr op=('=='|'!='|'>'|'<'|'>='|'<=') expr	#cndExpr;
+
 
 MUL : '*' ;
 DIV : '/' ;
@@ -85,6 +94,10 @@ ADD : '+' ;
 SUB : '-' ;
 EQC : '==' ;
 NEQ : '!=' ;
+GT : '>' ;
+LT : '<' ;
+GTE : '>=' ;
+LTE : '<=' ;
 
 ID : [a-zA-Z_]+ ;
 function_id : ID ;
