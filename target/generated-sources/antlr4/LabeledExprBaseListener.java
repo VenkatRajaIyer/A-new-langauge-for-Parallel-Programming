@@ -60,11 +60,17 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterDummyreturn(LabeledExprParser.DummyreturnContext ctx) { }
 	@Override public void exitDummyreturn(LabeledExprParser.DummyreturnContext ctx) { }
 
+	@Override public void enterDummywhile(LabeledExprParser.DummywhileContext ctx) { }
+	@Override public void exitDummywhile(LabeledExprParser.DummywhileContext ctx) { }
+
 	@Override public void enterParallelo(LabeledExprParser.ParalleloContext ctx) { }
 	@Override public void exitParallelo(LabeledExprParser.ParalleloContext ctx) { }
 
 	@Override public void enterCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { }
 	@Override public void exitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx) { }
+
+	@Override public void enterWhileExpr(LabeledExprParser.WhileExprContext ctx) { }
+	@Override public void exitWhileExpr(LabeledExprParser.WhileExprContext ctx) { }
 
 	@Override public void enterPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx) { }
 	@Override public void exitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx) { }
@@ -84,11 +90,11 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterPrintExpr(LabeledExprParser.PrintExprContext ctx) { }
 	@Override public void exitPrintExpr(LabeledExprParser.PrintExprContext ctx) { }
 
-	@Override public void enterNewTask(LabeledExprParser.NewTaskContext ctx) { }
-	@Override public void exitNewTask(LabeledExprParser.NewTaskContext ctx) { }
-
 	@Override public void enterFvoid(LabeledExprParser.FvoidContext ctx) { }
 	@Override public void exitFvoid(LabeledExprParser.FvoidContext ctx) { }
+
+	@Override public void enterNewTask(LabeledExprParser.NewTaskContext ctx) { }
+	@Override public void exitNewTask(LabeledExprParser.NewTaskContext ctx) { }
 
 	@Override public void enterIfStat(LabeledExprParser.IfStatContext ctx) { }
 	@Override public void exitIfStat(LabeledExprParser.IfStatContext ctx) { }
@@ -105,11 +111,11 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 	@Override public void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 	@Override public void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx) { }
 
-	@Override public void enterParametersType(LabeledExprParser.ParametersTypeContext ctx) { }
-	@Override public void exitParametersType(LabeledExprParser.ParametersTypeContext ctx) { }
-
 	@Override public void enterFchar(LabeledExprParser.FcharContext ctx) { }
 	@Override public void exitFchar(LabeledExprParser.FcharContext ctx) { }
+
+	@Override public void enterParametersType(LabeledExprParser.ParametersTypeContext ctx) { }
+	@Override public void exitParametersType(LabeledExprParser.ParametersTypeContext ctx) { }
 
 	@Override public void enterJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx) { }
 	@Override public void exitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx) { }
@@ -149,6 +155,9 @@ public class LabeledExprBaseListener implements LabeledExprListener {
 
 	@Override public void enterSVars(LabeledExprParser.SVarsContext ctx) { }
 	@Override public void exitSVars(LabeledExprParser.SVarsContext ctx) { }
+
+	@Override public void enterWhileStat(LabeledExprParser.WhileStatContext ctx) { }
+	@Override public void exitWhileStat(LabeledExprParser.WhileStatContext ctx) { }
 
 	@Override public void enterPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx) { }
 	@Override public void exitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx) { }

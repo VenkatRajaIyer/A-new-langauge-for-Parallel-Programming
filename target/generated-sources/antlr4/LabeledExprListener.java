@@ -57,11 +57,17 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterDummyreturn(LabeledExprParser.DummyreturnContext ctx);
 	void exitDummyreturn(LabeledExprParser.DummyreturnContext ctx);
 
+	void enterDummywhile(LabeledExprParser.DummywhileContext ctx);
+	void exitDummywhile(LabeledExprParser.DummywhileContext ctx);
+
 	void enterParallelo(LabeledExprParser.ParalleloContext ctx);
 	void exitParallelo(LabeledExprParser.ParalleloContext ctx);
 
 	void enterCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
 	void exitCriticalSectionWithParams(LabeledExprParser.CriticalSectionWithParamsContext ctx);
+
+	void enterWhileExpr(LabeledExprParser.WhileExprContext ctx);
+	void exitWhileExpr(LabeledExprParser.WhileExprContext ctx);
 
 	void enterPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx);
 	void exitPrintStrExpr(LabeledExprParser.PrintStrExprContext ctx);
@@ -81,11 +87,11 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterPrintExpr(LabeledExprParser.PrintExprContext ctx);
 	void exitPrintExpr(LabeledExprParser.PrintExprContext ctx);
 
-	void enterNewTask(LabeledExprParser.NewTaskContext ctx);
-	void exitNewTask(LabeledExprParser.NewTaskContext ctx);
-
 	void enterFvoid(LabeledExprParser.FvoidContext ctx);
 	void exitFvoid(LabeledExprParser.FvoidContext ctx);
+
+	void enterNewTask(LabeledExprParser.NewTaskContext ctx);
+	void exitNewTask(LabeledExprParser.NewTaskContext ctx);
 
 	void enterIfStat(LabeledExprParser.IfStatContext ctx);
 	void exitIfStat(LabeledExprParser.IfStatContext ctx);
@@ -102,11 +108,11 @@ public interface LabeledExprListener extends ParseTreeListener {
 	void enterPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 	void exitPrintlnExpr(LabeledExprParser.PrintlnExprContext ctx);
 
-	void enterParametersType(LabeledExprParser.ParametersTypeContext ctx);
-	void exitParametersType(LabeledExprParser.ParametersTypeContext ctx);
-
 	void enterFchar(LabeledExprParser.FcharContext ctx);
 	void exitFchar(LabeledExprParser.FcharContext ctx);
+
+	void enterParametersType(LabeledExprParser.ParametersTypeContext ctx);
+	void exitParametersType(LabeledExprParser.ParametersTypeContext ctx);
 
 	void enterJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
 	void exitJustcreatefunction(LabeledExprParser.JustcreatefunctionContext ctx);
@@ -146,6 +152,9 @@ public interface LabeledExprListener extends ParseTreeListener {
 
 	void enterSVars(LabeledExprParser.SVarsContext ctx);
 	void exitSVars(LabeledExprParser.SVarsContext ctx);
+
+	void enterWhileStat(LabeledExprParser.WhileStatContext ctx);
+	void exitWhileStat(LabeledExprParser.WhileStatContext ctx);
 
 	void enterPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
 	void exitPrintlnStrExpr(LabeledExprParser.PrintlnStrExprContext ctx);
