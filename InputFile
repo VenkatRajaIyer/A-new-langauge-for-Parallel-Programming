@@ -3,13 +3,13 @@
 int a
 println(a)
 a=5
-*/
+
 int test(int b)
 {
 	x = 5
         println("Value of x Inside the called function: ")
 	println(x)
-	return b
+	//return b
 }
 
 int testing(int x)
@@ -21,30 +21,38 @@ int testing(int x)
 }
 
 
-task a
+task ta
 {
 critical (chop_a, chop_b)
 {
 	println("eating 5")
-	test()
+	a = 10
+	test(a)
 	println("finished eating 5")
 }
 println("exited 5")
 }
 
 
-task b
+task tb
 {
 critical(chop_a, chop_b)
 {
 	println("eating 6")
-	testing()
+	b = 12
+	testing(b)
 	println("finished eating 6")
 }
 println("exited 6")
 
 }
-
+*/
+int sum (int a, int b)
+{
+	d = a+b
+	a=9
+	return d
+}
 
 main()
 {
@@ -55,7 +63,11 @@ main()
   parallelo.task(a, chop_d, chop_e)
   parallelo.task(a, chop_e, chop_a)
 */
-  parallelo.run(a, b)
+  a = 5
+  b = 12
+  c = sum(a,b)
+  println(c)
+  //parallelo.run(ta,tb)
 }
 
 

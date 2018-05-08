@@ -210,6 +210,18 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		return 0;
 	}
 	
+	@Override
+	public Integer visitDelayfunction(LabeledExprParser.DelayfunctionContext ctx)
+	{
+		int a = Integer.valueOf(ctx.INT().getText());
+		try {
+			Thread.sleep(a);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return 1;
+	}
+	
 	@Override 
 	public Integer visitNewTask(LabeledExprParser.NewTaskContext ctx) 
 	{ 
@@ -243,12 +255,12 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		}
 		for(Tasks t: critical)
 			t.start();
-		try {
+		/*try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		return 1; 
 	}
 	

@@ -14,6 +14,7 @@ stat:
 	| par NEWLINE						#parallelo
 	| tasks NEWLINE						#tsks
 	| returnstatement 					#dummyreturn
+	| delay								#dummydelay
 	| NEWLINE 							#blank
 	;
 par: 'parallelo.run' '('params')'		#parallleloRuntime;
@@ -50,6 +51,8 @@ expr: expr op=('*'|'/') expr 			#MulDiv
 newparallel: '{@' NEWLINE* sharedValues NEWLINE* tasks+ NEWLINE* endParallel #anotherParallelStruct ;
 endParallel: '@}' 															 #endParallelStruct
            ;
+           
+delay: 'delay' '(' INT ')' NEWLINE #delayfunction;
 sharedValues: 'shared' NEWLINE* '{' NEWLINE* params NEWLINE* '}'			 #sharedParams ;
 statinCritcal:stat*															 #statInCritical;
            
