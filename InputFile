@@ -1,73 +1,77 @@
-
-/*
-int a
-println(a)
-a=5
-
-int test(int b)
-{
-	x = 5
-        println("Value of x Inside the called function: ")
-	println(x)
-	//return b
-}
-
-int testing(int x)
-{
-	x = 6
-        println("Value of x Inside the called function: ")
-	println(x)
-	return x
-}
-
-
 task ta
 {
+println("Philosopher A tried to acquire forks but didn't succeed")
+delay(2000)
 critical (chop_a, chop_b)
 {
-	println("eating 5")
-	a = 10
-	test(a)
-	println("finished eating 5")
+	println("Philosopher A is eating")
+	delay(2000)
+	println("Philosopher A finished eating")
 }
-println("exited 5")
 }
-
 
 task tb
 {
-critical(chop_a, chop_b)
+println("Philosopher B tried to acquire forks but didn't succeed")
+delay(2000)
+critical (chop_b, chop_c)
 {
-	println("eating 6")
-	b = 12
-	testing(b)
-	println("finished eating 6")
+	println("Philosopher B is eating")
+	delay(2000)
+	println("Philosopher B finished eating")
 }
-println("exited 6")
+}
 
+task tc
+{
+println("Philosopher C tried to acquire forks but didn't succeed")
+delay(2000)
+critical (chop_c, chop_d)
+{
+	println("Philosopher C is eating")
+	delay(2000)
+	println("Philosopher C finished eating")
 }
-*/
-int sum (int a, int b)
+}
+
+task td
+{
+println("Philosopher D tried to acquire forks but didn't succeed")
+delay(2000)
+critical (chop_d, chop_e)
+{
+	println("Philosopher D is eating")
+	delay(2000)
+	println("Philosopher D finished eating")
+}
+}
+
+task te
+{
+println("Philosopher E tried to acquire forks but didn't succeed")
+delay(2000)
+critical (chop_e, chop_a)
+{
+	println("Philosopher E is eating")
+	delay(2000)
+	println("Philosopher E finished eating")
+}
+}
+
+int sum(int a, int b)
 {
 	d = a+b
-	a=9
 	return d
 }
 
 main()
 {
-/*  
-  parallelo.task(a, chop_a, chop_b)
-  parallelo.task(a, chop_b, chop_c)
-  parallelo.task(a, chop_c, chop_d)
-  parallelo.task(a, chop_d, chop_e)
-  parallelo.task(a, chop_e, chop_a)
-*/
   a = 5
   b = 12
   c = sum(a,b)
-  println(c)
-  //parallelo.run(ta,tb)
+  println("Welcome to Parallelo")
+  
+  parallelo.run(ta, tb, tc, td, te)
 }
 
 

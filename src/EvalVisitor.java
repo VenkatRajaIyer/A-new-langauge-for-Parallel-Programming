@@ -147,34 +147,20 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	{
 		int left = visit(ctx.expr(0));
 		int right = visit(ctx.expr(1));
-		switch (ctx.op.getType()) {
-		case LabeledExprParser.EQC:
+		if (ctx.op.getType()==LabeledExprParser.EQC){
 			if(left==right)
+			{
 				return 1;
-			break;
-		case LabeledExprParser.NEQ:
+			}
+		}
+		else if (ctx.op.getType()==LabeledExprParser.NEQ){
 			if(left!=right)
-				return 1;
-			break;
-		case LabeledExprParser.GT:
-			if(left>right)
-				return 1;
-			break;
-		case LabeledExprParser.LT:
-			if(left<right)
-				return 1;
-			break;
-		case LabeledExprParser.GTE:
-			if(left>=right)
-				return 1;
-			break;
-		case LabeledExprParser.LTE:
-			if(left<=right)
-				return 1;
-			break;
-		default:
+				{
+					return 1;
+				}
+		}
+		else{
 			System.out.println("Invlid conditional Expression");
-			break;
 		}
 		return 0;
 	}
@@ -182,9 +168,6 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 	@Override
 	public Integer visitIfStat(LabeledExprParser.IfStatContext ctx)
 	{
-		/*
-		 * TODO - If condition check
-		 */
 		int left = visit(ctx.condExpr());
 		int right = visit(ctx.expr());
 		if (left==1)
@@ -216,29 +199,6 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		String value = ctx.STR().getText();
 		evalVisitorString.visitPrintlnStrExpr(value);
 		return 0;
-	}
-	
-	@Override 
-	public Integer visitWhileExpr(LabeledExprParser.WhileExprContext ctx) 
-	{
-		return visitChildren(ctx); 
-	}
-
-	@Override 
-	public Integer visitWhileStat(LabeledExprParser.WhileStatContext ctx) 
-	{
-		LabeledExprParser.WhileExprContext whileExpr = ctx.whileExpr();
-		int condition = visit(whileExpr);
-		while(condition>0)
-		{
-			List<LabeledExprParser.StatContext> statements = ctx.stat();
-			for(LabeledExprParser.StatContext st: statements)
-			{
-				visit(st);
-			}
-		condition = visit(whileExpr);
-		}
-		return 1; 
 	}
 	
 	@Override
@@ -298,6 +258,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 		/*try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}*/
 		return 1; 
@@ -329,6 +290,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 							allMutexes.get(s).acquire();
 							//System.out.println("acquired " + s +" by " + "pilosopher "+ uniqueInt);
 						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}			
 					}
@@ -338,6 +300,7 @@ public class EvalVisitor extends LabeledExprBaseVisitor<Integer> {
 						try {
 							Thread.sleep(1);
 						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
